@@ -38,6 +38,6 @@ namespace CityExperiences
 
     public static class DBConfiguration
     {
-        public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=band_tracker;";
+        public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=cityexperiences;";
     }
 }
