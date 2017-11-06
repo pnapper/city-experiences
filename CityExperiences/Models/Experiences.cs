@@ -231,7 +231,7 @@ namespace CityExperiences.Models
       return name;
     }
 
-    public List<City> GetCityName()
+    public string GetCityName()
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
@@ -240,7 +240,7 @@ namespace CityExperiences.Models
 
       MySqlParameter locationId = new MySqlParameter();
       locationId.ParameterName = "@locationId";
-      locationId.Value = this._id;
+      locationId.Value = this._location_id;
       cmd.Parameters.Add(locationId);
 
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
