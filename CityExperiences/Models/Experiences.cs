@@ -98,6 +98,11 @@ namespace CityExperiences.Models
       locationId.Value = this._location_id;
       cmd.Parameters.Add(locationId);
 
+      MySqlParameter userId = new MySqlParameter();
+      userId.ParameterName = "@userId";
+      userId.Value = this._user_id;
+      cmd.Parameters.Add(userId);
+
       MySqlParameter title = new MySqlParameter();
       title.ParameterName = "@title";
       title.Value = this._title;
@@ -125,6 +130,47 @@ namespace CityExperiences.Models
       {
         conn.Dispose();
       }
+    }
+
+    public static Experience Find(int id)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM experiences WHERE id = (@searchId);";
+
+      MySqlParameter searchId = new MySqlParameter();
+      searchId.ParameterName = "@searchId";
+      searchId.Value = id;
+      cmd.Parameters.Add(searchId);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      int experienceId = 0;
+      int experienceLocationId = 0;
+      int experienceUserId = 0;
+      string experienceTitle = "";
+      string experienceDescription = "";
+      string experiencePhotoLink = "";
+      int experiencePrice = 0;
+
+      while(rdr.Read())
+      {
+        experienceId = rdr.GetInt32(0);
+        experienceLocationId = rdr.GetInt32(1);
+        experienceUserId = rdr.GetInt32(2);
+        experienceTitle = rdr.GetString(3);
+        experienceDescription = rdr.GetString(4);
+        experiencePhotoLink = rdr.GetString(5);
+        experiencePrice = rdr.GetInt32(6);
+      }
+
+      Experience newExperience = new Experience(experienceLocationId, experienceUserId, experienceTitle, experienceDescription, experiencePhotoLink, experiencePrice, experienceId);
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return newExperience;
     }
 
     // public void AddUser(User newUser)
@@ -227,6 +273,25 @@ namespace CityExperiences.Models
       if (conn != null)
       {
         conn.Dispose();
+      }
+    }
+
+    public void DeleteExperience()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      MySqlCommand cmd = new MySqlCommand("DELETE FROM experiences WHERE id = @ExperienceId; DELETE FROM bookings WHERE experience_id = @ExperienceId; DELETE FROM experiences_tags WHERE experience_id = @ExperienceId;", conn);
+      MySqlParameter ExperienceIdParameter = new MySqlParameter();
+      ExperienceIdParameter.ParameterName = "@ExperienceId";
+      ExperienceIdParameter.Value = this.GetId();
+
+      cmd.Parameters.Add(ExperienceIdParameter);
+      cmd.ExecuteNonQuery();
+
+      if (conn != null)
+      {
+        conn.Close();
       }
     }
   }
