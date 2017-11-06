@@ -278,7 +278,7 @@ namespace CityExperiences.Models
       cmd.Parameters.Add(description);
 
       cmd.ExecuteNonQuery();
-      _experienceDescription = newDescription;
+      _description = newDescription;
 
       conn.Close();
       if (conn != null)
@@ -301,11 +301,11 @@ namespace CityExperiences.Models
 
       MySqlParameter price = new MySqlParameter();
       price.ParameterName = "@newPrice";
-      price.Value = newDescription;
+      price.Value = newPrice;
       cmd.Parameters.Add(price);
 
       cmd.ExecuteNonQuery();
-      _experiencePrice = newPrice;
+      _price = newPrice;
 
       conn.Close();
       if (conn != null)
@@ -368,7 +368,6 @@ namespace CityExperiences.Models
       }
       return experiencesTags;
     }
-
 
     public static void DeleteAll()
     {

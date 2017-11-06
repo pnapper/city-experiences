@@ -83,5 +83,39 @@ namespace CityExperiences.Tests
       //Assert
       Assert.AreEqual(testExperience, result);
     }
+
+    [TestMethod]
+    public void Update_UpdatesDescriptionInDatabase_String()
+    {
+      // Arrange
+      Experience testExperience = new Experience(1, 2, "Sky Diving", "Blah Blah..", "/hjfsddjf.com", 150);
+      testExperience.Save();
+      string newDescription = "Bungee jumping";
+
+      // Act
+      testExperience.UpdateDescription(newDescription);
+
+      string result = Experience.Find(testExperience.GetId()).GetDescription();
+
+      // Assert
+      Assert.AreEqual(newDescription, result);
+    }
+
+    [TestMethod]
+    public void Update_UpdatesPriceInDatabase_Int()
+    {
+      // Arrange
+      Experience testExperience = new Experience(1, 2, "Sky Diving", "Blah Blah..", "/hjfsddjf.com", 150);
+      testExperience.Save();
+      int newPrice = 180;
+
+      // Act
+      testExperience.UpdatePrice(newPrice);
+
+      int result = Experience.Find(testExperience.GetId()).GetPrice();
+
+      // Assert
+      Assert.AreEqual(newPrice, result);
+    }
   }
 }
