@@ -118,6 +118,8 @@ namespace CityExperiences.Models;
       return allUsers;
     }
 
+
+
     public static User Find(int Id)
     {
       MySqlConnection conn = DB.Connection();
@@ -156,6 +158,37 @@ namespace CityExperiences.Models;
       return newUser;
     }
 
+    public List<Experience> GetUserListings();
+    {
+      List<Experience> allUserListings = new List<Experience> {};
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT experiences.* FROM users JOIN experiences ON (users.id = experiences.user_id);";
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+      while(rdr.Read())
+      {
+        int experienceId = rdr.GetInt32(0);
+        int experienceLocationId = rdr.GetInt32(1);
+        int experienceUserId = rdr.GetInt32(2);
+        string experienceTitle = rdr.GetString(3);
+        string experienceDescription = rdr.GetString(4);
+        string experiencsPhotoLink = rdr.GetString(5);
+        int experiencePrice = rdr.GetString(6);
+
+        Experience newExperience = new Experience(experienceId, experienceLocationId, experienceUserId, experienceTitle, experienceDescription, experiencsPhotoLink, experiencePrice);
+        allExperiences.Add(newUser);
+      }
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return allUserListings;
+    }
+
     //Experiences and bookings
 
     public void DeleteUser()
@@ -173,8 +206,13 @@ namespace CityExperiences.Models;
 
       if (conn != null)
       {
-        conn.Close(); 
+        conn.Close();
       }
+    }
+
+    public AddExperience()
+    {
+
     }
   }
 }
