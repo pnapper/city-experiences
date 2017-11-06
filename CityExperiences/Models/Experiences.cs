@@ -1,0 +1,233 @@
+using System.Collections.Generic;
+using MySql.Data.MySqlClient;
+using System;
+
+namespace CityExperiences.Models
+{
+  public class Experience
+  {
+    private int _id;
+    private int _location_id;
+    private int _user_id;
+    private string _title;
+    private string _description;
+    private string _photo_link;
+    private int _price;
+
+    public Experience(int locationId, int userId, string title, string description, string photoLink, int price, int id = 0)
+    {
+      _id = id;
+      _location_id = locationId;
+      _user_id = userId;
+      _title = title;
+      _description = description;
+      _photo_link = photoLink;
+      _price = price;
+    }
+
+    public override bool Equals(System.Object otherExperience)
+    {
+      if(!(otherExperience is Experience))
+      {
+        return false;
+      }
+      else
+      {
+        Experience newExperience = (Experience) otherExperience;
+        bool idEquality = this.GetId() == newExperience.GetId();
+        bool location_idEquality = this.GetLocationId() == newExperience.GetLocationId();
+        bool user_idEquality = this.GetUserId() == newExperience.GetUserId();
+        bool titleEquality = this.GetTitle() == newExperience.GetTitle();
+        bool descriptionEquality = this.GetDescription() == newExperience.GetDescription();
+        bool photo_linkEquality = this.GetPhotoLink() == newExperience.GetPhotoLink();
+        bool priceEquality = this.GetPrice() == newExperience.GetPrice();
+        return(idEquality && location_idEquality && user_idEquality && titleEquality && descriptionEquality && photo_linkEquality && priceEquality);
+      }
+    }
+
+    public override int GetHashCode()
+    {
+      return this.GetTitle().GetHashCode();
+    }
+
+    public int GetId()
+    {
+      return _id;
+    }
+
+    public int GetLocationId()
+    {
+      return _location_id;
+    }
+
+    public int GetUserId()
+    {
+      return _user_id;
+    }
+
+    public string GetTitle()
+    {
+      return _title;
+    }
+
+    public string GetDescription()
+    {
+      return _description;
+    }
+
+    public string GetPhotoLink()
+    {
+      return _photo_link;
+    }
+
+    public int GetPrice()
+    {
+      return _price;
+    }
+
+    public void Save()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"INSERT INTO experiences (location_id, user_id, title, description, photo_link, price) VALUES (@locationId, @userId, @title, @description, @photoLink, @price);";
+
+      MySqlParameter locationId = new MySqlParameter();
+      locationId.ParameterName = "@locationId";
+      locationId.Value = this._location_id;
+      cmd.Parameters.Add(locationId);
+
+      MySqlParameter title = new MySqlParameter();
+      title.ParameterName = "@title";
+      title.Value = this._title;
+      cmd.Parameters.Add(title);
+
+      MySqlParameter description = new MySqlParameter();
+      description.ParameterName = "@description";
+      description.Value = this._description;
+      cmd.Parameters.Add(description);
+
+      MySqlParameter photoLink = new MySqlParameter();
+      photoLink.ParameterName = "@photoLink";
+      photoLink.Value = this._photo_link;
+      cmd.Parameters.Add(photoLink);
+
+      MySqlParameter price = new MySqlParameter();
+      price.ParameterName = "@price";
+      price.Value = this._price;
+      cmd.Parameters.Add(price);
+
+      cmd.ExecuteNonQuery();
+      _id = (int) cmd.LastInsertedId;
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+    }
+
+    // public void AddUser(User newUser)
+    // {
+    //   MySqlConnection conn = DB.Connection();
+    //   conn.Open();
+    //
+    //   var cmd = conn.CreateCommand() as MySqlCommand;
+    //   cmd.CommandText = @"INSERT INTO bookings (experience_id, user_id) VALUES (@experienceId, @userId);";
+    //
+    //   MySqlParameter bookId = new MySqlParameter();
+    //   experienceId.ParameterName = "@experienceId";
+    //   experienceId.Value = this._id;
+    //   cmd.Parameters.Add(experienceId);
+    //
+    //   MySqlParameter userId = new MySqlParameter();
+    //   userId.ParameterName = "@userId";
+    //   userId.Value = newAuthor.GetId();
+    //   cmd.Parameters.Add(userId);
+    //
+    //   cmd.ExecuteNonQuery();
+    //   conn.Close();
+    //   if (conn != null)
+    //   {
+    //     conn.Dispose();
+    //   }
+    // }
+
+    public static List<Experience> GetAll()
+    {
+      List<Experience> allExperiences = new List<Experience> {};
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM experiences;";
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      while(rdr.Read())
+      {
+        int experienceId = rdr.GetInt32(0);
+        int experienceLocationId = rdr.GetInt32(1);
+        int experienceUserId = rdr.GetInt32(2);
+        string experienceTitle = rdr.GetString(3);
+        string experienceDescription = rdr.GetString(4);
+        string experiencePhotoLink = rdr.GetString(5);
+        int experiencePrice = rdr.GetInt32(6);
+
+        Experience newExperience = new Experience(experienceLocationId, experienceUserId, experienceTitle, experienceDescription, experiencePhotoLink, experiencePrice, experienceId);
+        allExperiences.Add(newExperience);
+      }
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return allExperiences;
+    }
+
+    // public static List<Experiences> SearchByCity(int id)
+    // {
+    //   List<Experience> foundExperiences = new List<Experience> {};
+    //   MySqlConnection conn = DB.Connection();
+    //   conn.Open();
+    //   var cmd = conn.CreateCommand() as MySqlCommand;
+    //   cmd.CommandText = @"SELECT * FROM experiences WHERE location_id LIKE @searchTitle;";
+    //
+    //   MySqlParameter searchTitle = new MySqlParameter();
+    //   searchTitle.ParameterName = "@searchTitle";
+    //   searchTitle.Value = '%'+name+'%';
+    //   cmd.Parameters.Add(searchTitle);
+    //
+    //   var rdr = cmd.ExecuteReader() as MySqlDataReader;
+    //   int BookId = 0;
+    //   string BookTitle = "";
+    //   int BookCopies = 0;
+    //
+    //   while(rdr.Read())
+    //   {
+    //     BookId = rdr.GetInt32(0);
+    //     BookTitle = rdr.GetString(1);
+    //     BookCopies = rdr.GetInt32(2);
+    //     Book foundBook = new Book(BookTitle, BookCopies, BookId);
+    //     foundBooks.Add(foundBook);
+    //   }
+    //   conn.Close();
+    //   if (conn != null)
+    //   {
+    //     conn.Dispose();
+    //   }
+    //   return foundBooks;
+    // }
+
+    public static void DeleteAll()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"DELETE FROM experiences;";
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+    }
+  }
+}
