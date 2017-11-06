@@ -83,6 +83,5 @@ namespace CityExperiences.Tests
       //Assert
       Assert.AreEqual(testExperience, result);
     }
-
   }
 }
