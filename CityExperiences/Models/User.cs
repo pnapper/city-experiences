@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using System;
 
-namespace CityExperiences.Models;
+namespace CityExperiences.Models
 {
   public class User
   {
@@ -85,7 +85,7 @@ namespace CityExperiences.Models;
 
       if (conn != null)
       {
-        conn.Dispose()
+        conn.Dispose();
       }
     }
 
@@ -120,7 +120,7 @@ namespace CityExperiences.Models;
 
 
 
-    public static User Find(int Id)
+    public static User Find(int id)
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
@@ -158,15 +158,20 @@ namespace CityExperiences.Models;
       return newUser;
     }
 
-    public List<Experience> GetUserListings();
+    public List<Experience> GetUserListings()
     {
       List<Experience> allUserListings = new List<Experience> {};
       MySqlConnection conn = DB.Connection();
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"SELECT experiences.* FROM users JOIN experiences ON (users.id = experiences.user_id);";
+      cmd.CommandText = @"SELECT experiences.* FROM users JOIN experiences ON (users.id = experiences.user_id) WHERE users.id = @searchId;";
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+      MySqlParameter SearchId = new MySqlParameter();
+      SearchId.ParameterName = "@SearchId";
+      SearchId.Value = this._SearchId;
+      cmd.Parameters.Add(SearchId);
 
       while(rdr.Read())
       {
@@ -196,6 +201,7 @@ namespace CityExperiences.Models;
       MySqlConnection conn = DB.Connection();
       conn.Open();
 
+      var cmd = conn.CreateCommand() as MySqlCommand;
       MySqlCommand = new MySqlCommand("DELETE FROM users WHERE id = @userId; DELETE FROM experiences WHERE id = @userId; DELETE FROM bookings WHERE id = @userId;", conn);
       MySqlParameter UserIdParameter = new MySqlParameter();
       UserIdParameter.ParameterName = "@userId";
@@ -210,9 +216,5 @@ namespace CityExperiences.Models;
       }
     }
 
-    public AddExperience()
-    {
-
-    }
   }
 }
