@@ -89,6 +89,92 @@ namespace CityExperiences.Models;
       }
     }
 
-    
+    public static List<User> GetAll()
+    {
+      List<User> allUsers = new List<User> {};
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM users;";
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+      while(rdr.Read())
+      {
+        int userId = rdr.GetInt32(0);
+        string userName = rdr.GetString(1);
+        string userDateOfBirth = rdr.GetString(2);
+        int userCityId = rdr.GetInt32(3);
+        string userEmail = rdr.GetString(4);
+
+        User newUser = new User(userName, userDateOfBirth, userCityId, userEmail, userId);
+        allUsers.Add(newUser);
+      }
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return allUsers;
+    }
+
+    public static User Find(int Id)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM users WHERE id = (@searchId);";
+
+      MySqlParameter searchId = new MySqlParameter();
+      searchId.ParameterName = "@searchId";
+      searchId.Value = id;
+      cmd.Parameters.Add(searchId);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      int userId = 0;
+      string userName = "";
+      string userDateOfBirth = "";
+      int userCityId = 0;
+      string userEmail = "";
+
+      while(rdr.Read())
+      {
+        userId = rdr.GetInt32(0);
+        userName = rdr.GetString(1);
+        userDateOfBirth = rdr.GetString(2);
+        userCityId = rdr.GetInt32(3);
+        userEmail = rdr.GetString(4);
+      }
+      User newUser = new User(userName, userDateOfBirth, userCityId, userEmail, userId);
+      conn.Close();
+
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return newUser;
+    }
+
+    //Experiences and bookings
+
+    public void DeleteUser()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      MySqlCommand = new MySqlCommand("DELETE FROM users WHERE id = @userId; DELETE FROM experiences WHERE id = @userId; DELETE FROM bookings WHERE id = @userId;", conn);
+      MySqlParameter UserIdParameter = new MySqlParameter();
+      UserIdParameter.ParameterName = "@userId";
+      UserIdParameter.Value = this.GetId();
+
+      cmd.Parameters.Add(UserIdParameter);
+      cmd.ExecuteNonQuery();
+
+      if (conn != null)
+      {
+        conn.Close(); 
+      }
+    }
   }
 }
