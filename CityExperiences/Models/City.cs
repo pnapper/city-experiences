@@ -52,7 +52,7 @@ namespace CityExperiences.Models
         int cityId = rdr.GetInt32(0);
         string cityName = rdr.GetString(1);
         string cityLink = rdr.GetString(2);
-        City newCity = new City(cityNumber, cityLink, cityId);
+        City newCity = new City(cityName, cityLink, cityId);
         allCities.Add(newCity);
       }
       conn.Close();
@@ -65,9 +65,9 @@ namespace CityExperiences.Models
       return allCities;
     }
 
-    public List<Experiences> GetCityExperiences()
+    public List<Experience> GetCityExperiences()
     {
-      List<Experiences> allExperiences = new List<Experiences> {};
+      List<Experience> allExperiences = new List<Experience> {};
       MySqlConnection conn = DB.Connection();
       conn.Open();
 
@@ -76,7 +76,7 @@ namespace CityExperiences.Models
 
       MySqlParameter searchId = new MySqlParameter();
       searchId.ParameterName = "@searchId";
-      searchId.Value = this._cityId;
+      searchId.Value = this._id;
       cmd.Parameters.Add(searchId);
 
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
@@ -92,7 +92,7 @@ namespace CityExperiences.Models
 
       while(rdr.Read())
       {
-        experiencesId = rdr.GetString(0);
+        experiencesId = rdr.GetInt32(0);
         experiencesLocationId = rdr.GetInt32(1);
         experiencesUserId = rdr.GetInt32(2);
         experiencesTitle = rdr.GetString(3);
@@ -100,8 +100,8 @@ namespace CityExperiences.Models
         experiencesPhotoLink = rdr.GetString(5);
         experiencesPrice = rdr.GetInt32(6);
 
-        Experiences newExperiences = new Experiences(expereincesName, expereincesDateOfBirth, expereincesCountry, expereincesEmail, expereincesId);
-        allUsers.Add(newExperiences);
+        Experience newExperiences = new Experience(experiencesLocationId, experiencesUserId, experiencesTitle, experiencesDescription, experiencesPhotoLink, experiencesPrice,  experiencesId);
+        allExperiences.Add(newExperiences);
 
       }
       conn.Close();
@@ -112,9 +112,9 @@ namespace CityExperiences.Models
       return allExperiences;
     }
 
-    public List<Experiences> GetCityHosts()
+    public List<Experience> GetCityHosts()
     {
-      List<Experiences> allExperiences = new List<Experiences> {};
+      List<Experience> allExperiences = new List<Experience> {};
       MySqlConnection conn = DB.Connection();
       conn.Open();
 
@@ -123,7 +123,7 @@ namespace CityExperiences.Models
 
       MySqlParameter searchId = new MySqlParameter();
       searchId.ParameterName = "@searchId";
-      searchId.Value = this._cityId;
+      searchId.Value = this._id;
       cmd.Parameters.Add(searchId);
 
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
@@ -139,7 +139,7 @@ namespace CityExperiences.Models
 
       while(rdr.Read())
       {
-        experiencesId = rdr.GetString(0);
+        experiencesId = rdr.GetInt32(0);
         experiencesLocationId = rdr.GetInt32(1);
         experiencesUserId = rdr.GetInt32(2);
         experiencesTitle = rdr.GetString(3);
@@ -147,8 +147,8 @@ namespace CityExperiences.Models
         experiencesPhotoLink = rdr.GetString(5);
         experiencesPrice = rdr.GetInt32(6);
 
-        Experiences newExperiences = new Experiences(expereincesName, expereincesDateOfBirth, expereincesCountry, expereincesEmail, expereincesId);
-        allUsers.Add(newExperiences);
+        Experience newExperiences = new Experience(experiencesLocationId, experiencesUserId, experiencesTitle, experiencesDescription, experiencesPhotoLink, experiencesPrice,  experiencesId);
+        allExperiences.Add(newExperiences);
 
       }
       conn.Close();
