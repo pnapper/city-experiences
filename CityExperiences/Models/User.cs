@@ -119,7 +119,6 @@ namespace CityExperiences.Models
     }
 
 
-
     public static User Find(int id)
     {
       MySqlConnection conn = DB.Connection();
@@ -202,7 +201,10 @@ namespace CityExperiences.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      MySqlCommand rdr = new MySqlCommand("DELETE FROM users WHERE id = @userId; DELETE FROM experiences WHERE id = @userId; DELETE FROM bookings WHERE id = @userId;", conn);
+
+      cmd.CommandText = @"DELETE FROM users WHERE id = @userId; DELETE FROM experiences WHERE id = @userId; DELETE FROM bookings WHERE id = @userId;";
+
+
       MySqlParameter UserIdParameter = new MySqlParameter();
       UserIdParameter.ParameterName = "@userId";
       UserIdParameter.Value = this.GetId();
