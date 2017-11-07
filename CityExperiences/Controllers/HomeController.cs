@@ -13,16 +13,30 @@ namespace CityExperiences.Controllers
     {
       return View();
     }
+
+    [HttpGet("/user/{userId}/experience/{experienceId}/view")]
+    public ActionResult ViewExperience(int userId, int experienceId)
+    {
+      Dictionary<string, object> model = new Dictionary<string, object> ();
+
+      User thisUser = User.Find(userId);
+      Experience thisExperience = Experience.Find(experienceId);
+
+      model.Add("user", thisUser);
+      model.Add("experience", thisExperience);
+
+      return View("ViewExperience", model);
+    }
+
     [HttpPost("/user/{userId}/experience/new")]
     public ActionResult AddExperience(int userId)
     {
+
+      User thisUser = User.Find(userId);
+
       Experience newExperience = new Experience(
-      Int32.Parse(Request.Form["experience-location"],
-      Int32.Parse(userId),
-      Request.Form["experience-title"],
-      Request.Form["experience-description"],
-      Int32.Parse(Request.Form["experience-photo"],
-      Int32.Parse(Request.Form["experience-price"]));
+      Int32.Parse(Request.Form["experience-location"]),
+      Int32.Parse(userId), Request.Form["experience-title"], Request.Form["experience-description"], Request.Form["experience-photo"], Int32.Parse(Request.Form["experience-price"]));
       newExperience.Save();
       int TagValue = Int32.Parse(Request.Form["number-loop"]);
       for(var i=1;i<=TagValue;i++)
@@ -38,6 +52,26 @@ namespace CityExperiences.Controllers
           Tag repeatTag = newTag.FindTag();
           newTag.AddTag(repeatTag);
         }
-
-        return View("IndexUser", userId);
       }
+      return View("IndexUser", thisUser);
+    }
+
+    [HttpPost("/user/{userId}/experience/{experienceId}/edit")]
+    public ActionResult EditExperience(int userId, int experienceId)
+    {
+      User thisUser = User.Find(userId);
+      Dictionary<string, object> model = new Dictionary<string, object> ();
+      Experience thisExperience = Experience.Find(experienceId);
+
+      findExperience.UpdateDescription(Request.Form["experience-description"];
+      findExperience.UpdatePhoto(Request.Form["experience-photo"];
+      findExperience.UpdatePrice(Int32.Parse(Request.Form["experience-price"]));
+
+      model.Add("user", thisUser);
+      model.Add("experience", thisExperience);
+
+
+      return View("ViewExperience", model);
+
+    }
+  }
