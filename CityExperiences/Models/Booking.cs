@@ -137,7 +137,7 @@ namespace CityExperiences.Models
                 {
                     conn.Dispose();
                 }
-                return cname;
+                return name;
             }
 
     // public static List<Booking> GetAll()

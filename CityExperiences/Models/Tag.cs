@@ -67,7 +67,7 @@ namespace CityExperiences.Models
       }
       foreach (var tag in allTags)
       {
-        if(tag.GetName() == _name)
+        if(tag.GetTagName() == _tagName)
         {
           IsNewTag = false;
         }

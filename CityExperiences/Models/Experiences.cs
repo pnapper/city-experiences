@@ -315,7 +315,7 @@ namespace CityExperiences.Models
         conn.Dispose();
       }
 
-      // return name;
+      return name;
     }
 
     public void UpdateDescription(string newDescription)
