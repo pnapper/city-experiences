@@ -1,0 +1,34 @@
+@{
+  Layout = "_Layout";
+}
+ <header>
+   <img src="https://static1.squarespace.com/static/59789abccd0f68d2902de57e/t/59a55900d2b857e7725bd187/1509539354065/" width="100" height="100"alt="">
+
+  <h1>
+      City Experiences
+  </h1>
+</header>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">City Experiences</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/">Home</a></li>
+    </ul>
+  </div>
+</nav>
+
+<h2>Tag Experiences</h2>
+<div class="row">
+   @foreach(var img in @tag.GetPhotoLink())
+   {
+       <div class="col-md-3">
+         <div class="well">
+           <img src="https://s-media-cache-ak0.pinimg.com/originals/3e/c9/3e/3ec93e39bd3840081e6349db501f5c3b.jpg"  height="350" style="width:100%;">
+           <div class="bottom-right">Experience</div>
+
+         </div>
+       </div>
+}
+  </div>
