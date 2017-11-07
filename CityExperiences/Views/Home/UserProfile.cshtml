@@ -1,0 +1,74 @@
+@{
+  Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div class="jumbotron">
+      <h1>City Experiences</h1>
+    </div>
+    <div class="box">
+      <h2>User Information</h2>
+      <h3>Name: @Model["User"].GetName()</h3>
+      <h3>Birthday: @Model["User"].GetDateOfBirth()</h3>
+      <h3>Country: @Model["User"].GetCountry()</h3>
+      <h3>Email: @Model["User"].GetEmail()</h3>
+      @* <h3>Password: @Model["User"].GetPassword()</h3> *@
+      <h3>Phone Number: @Model["User"].GetPhone()</h3>
+    </div>
+    <div class="row">
+      <div class="listingBox">
+        <h2>Listings</h2>
+        <table>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Edit Listing</th>
+          </tr>
+
+          @foreach (var experience in @Model.Experiences)
+          {
+            <tr>
+              <td>@experience.GetTitle()</td>
+              <td>@experience.GetDescription()</td>
+              <td>@experience.GetPrice()</td>
+              <td><a href="/user/@Model["user"].GetId()/experience/@Model["experience"].GetId()/edit">Edit</td>
+            </tr>
+          }
+        </table>
+      </div>
+    <div class="row">
+      <div class="bookingBox">
+        <h2>Bookings</h2>
+        <table>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Edit Listing</th>
+          </tr>
+
+          @foreach (var booking in @Model["bookings"])
+          {
+            <tr>
+            <td><a href="/user/@Model["user"].GetId()/experience/@Model["experience"].GetId()/view">@booking.GetExperienceTitle()</td>
+              <td>@booking.GetHostName()</td>
+              <td>@booking.GetHostEmail()</td>
+              <td>@booking.GetHostPhone()</td>
+            </tr>
+          }
+        </table>
+
+      </div>
+    </div>
+    <form class="form-group" action="/" method="post">
+      <button type="submit" name="button">Home</button>
+    </form>
+  </body>
+</html>
