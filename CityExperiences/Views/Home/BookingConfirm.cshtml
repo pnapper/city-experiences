@@ -1,0 +1,20 @@
+@{
+  Layout = "_Layout";
+}
+
+@section scripts {
+
+}
+
+<body>
+  <h1>Booking Confirmation</h1>
+  <h2>Confirmation Number: @Model["booking"].GetId()</h2>
+  <h2>Host Name: @Model["experience"].GetHostName()</h2>
+  <h2>Host Contact: @Model["experience"].GetHostEmail(), @Model["experience"].GetHostMobile()</h2>
+  <h2>Price: @Model["experience"].GetPrice()</h2>
+  <br>
+
+<form class="" action="/user/@Model["user"].GetId()/profile">
+  <button type="submit" name="button" class="btn btn-info">Confirm Booking</button>
+  </form> <br>
+</body>

@@ -13,29 +13,66 @@ namespace CityExperiences.Controllers
     {
       return View();
     }
+
+    [HttpGet("/user/{userId}/experience/{experienceId}/view")]
+    public ActionResult ViewExperience(int userId, int experienceId)
+    {
+      Dictionary<string, object> model = new Dictionary<string, object> ();
+
+      Person thisPerson = Person.Find(userId);
+      Experience thisExperience = Experience.Find(experienceId);
+
+      model.Add("user", thisPerson);
+      model.Add("experience", thisExperience);
+
+      return View("ViewExperience", model);
+    }
+
     [HttpPost("/user/{userId}/experience/new")]
     public ActionResult AddExperience(int userId)
     {
+
+      Person thisPerson = Person.Find(userId);
+
       Experience newExperience = new Experience(
-      Int32.Parse(Request.Form["experience-location"],
-      Int32.Parse(userId),
-      Request.Form["experience-title"],
-      Request.Form["experience-description"],
-      Int32.Parse(Request.Form["experience-location"],
-      Request.Form["experience-title"], Int32.Parse(Request.Form["experience-copies"]));
+      Int32.Parse(Request.Form["experience-location"]),
+      userId, Request.Form["experience-title"], Request.Form["experience-description"], Request.Form["experience-photo"], Int32.Parse(Request.Form["experience-price"]));
       newExperience.Save();
-      int authorValue = Int32.Parse(Request.Form["number-loop"]);
-      for(var i=1;i<=authorValue;i++)
+      int TagValue = Int32.Parse(Request.Form["number-loop"]);
+      for(var i=1;i<=TagValue;i++)
       {
-        Author newAuthor = new Author(Request.Form["author-name"+i]);
-        if(newAuthor.IsNewAuthor() == true)
+        Tag newTag = new Tag(Request.Form["tag-name"+i]);
+        if(newTag.IsNewTag() == true)
         {
-          newAuthor.Save();
-          newExperience.AddAuthor(newAuthor);
+          newTag.Save();
+          newExperience.AddTag(newTag);
         }
         else
         {
-          Author repeatAuthor = newAuthor.FindAuthor();
-          newExperience.AddAuthor(repeatAuthor);
+          Tag repeatTag = newTag.FindTag();
+          newExperience.AddTag(repeatTag);
         }
       }
+      return View("IndexPerson", thisPerson);
+    }
+
+    [HttpPost("/user/{userId}/experience/{experienceId}/edit")]
+    public ActionResult EditExperience(int userId, int experienceId)
+    {
+      Person thisPerson = Person.Find(userId);
+      Dictionary<string, object> model = new Dictionary<string, object> ();
+      Experience thisExperience = Experience.Find(experienceId);
+
+      thisExperience.UpdateDescription(Request.Form["experience-description"]);
+      thisExperience.UpdatePhoto(Request.Form["experience-photo"]);
+      thisExperience.UpdatePrice(Int32.Parse(Request.Form["experience-price"]));
+
+      model.Add("user", thisPerson);
+      model.Add("experience", thisExperience);
+
+
+      return View("ViewExperience", model);
+
+    }
+  }
+}
