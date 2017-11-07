@@ -131,13 +131,13 @@ namespace CityExperiences.Models
                 {
                   cityName = rdr.GetString(1);
                 }
-                string cname = cityName;
+                string cityname = cityName;
                 conn.Close();
                 if (conn != null)
                 {
                     conn.Dispose();
                 }
-                return name;
+                return cityname;
             }
 
     // public static List<Booking> GetAll()

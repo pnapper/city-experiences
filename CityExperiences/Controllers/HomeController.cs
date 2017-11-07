@@ -14,6 +14,35 @@ namespace CityExperiences.Controllers
       return View();
     }
 
+    [HttpPost("/experiences/tag/search")]
+    public ActionResult ViewTagExperiences()
+    {
+      Dictionary<string, object> model = new Dictionary<string, object> ();
+
+
+      Tag tagSearch = Tag.Find[Request.Form("tag-name")];
+      List<Experience> allTagExperiences = Tag.GetTagExperiences();
+
+      model.Add("tag", tagSearch);
+      model.Add("experiences", allTagExperiences);
+
+      return View("TagExperiences", model);
+
+
+    }
+
+    [HttpGet("/experience/{experienceId}/view")]
+    public ActionResult ViewExperience(int userId, int experienceId)
+    {
+      Dictionary<string, object> model = new Dictionary<string, object> ();
+
+      Experience thisExperience = Experience.Find(experienceId);
+
+      model.Add("experience", thisExperience);
+
+      return View("ViewExperience", model);
+    }
+
     [HttpGet("/user/{userId}/experience/{experienceId}/view")]
     public ActionResult ViewExperience(int userId, int experienceId)
     {
