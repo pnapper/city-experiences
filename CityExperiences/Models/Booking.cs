@@ -107,6 +107,7 @@ namespace CityExperiences.Models
             return gname;
         }
 
+
         public string GetCity()
         {
 

@@ -231,7 +231,7 @@ namespace CityExperiences.Models
       return name;
     }
 
-    public string GetCityName()
+    public string GetCountryName()
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
