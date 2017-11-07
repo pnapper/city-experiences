@@ -38,4 +38,6 @@ namespace CityExperiences.Controllers
           Tag repeatTag = newTag.FindTag();
           newTag.AddTag(repeatTag);
         }
+
+        return View("IndexUser", userId);
       }

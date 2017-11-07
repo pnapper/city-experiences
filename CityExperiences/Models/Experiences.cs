@@ -231,6 +231,64 @@ namespace CityExperiences.Models
       return name;
     }
 
+    public string GetHostMobile()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT mobile FROM users WHERE users.id = @userId;";
+
+      MySqlParameter userId = new MySqlParameter();
+      userId.ParameterName = "@userId";
+      userId.Value = this._id;
+      cmd.Parameters.Add(userId);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      string hostMobile = "";
+
+      while(rdr.Read())
+      {
+        hostMobile = rdr.GetString(0);
+      }
+      string mobile = hostMobile;
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+
+      return mobile;
+    }
+
+    public string GetHostEmail()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT email FROM users WHERE users.id = @userId;";
+
+      MySqlParameter userId = new MySqlParameter();
+      userId.ParameterName = "@userId";
+      userId.Value = this._id;
+      cmd.Parameters.Add(userId);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      string hostEmail = "";
+
+      while(rdr.Read())
+      {
+        hostEmail = rdr.GetString(0);
+      }
+      string email = hostEmail;
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+
+      return email;
+    }
+
     public string GetCityName()
     {
       MySqlConnection conn = DB.Connection();
