@@ -194,6 +194,42 @@ namespace CityExperiences.Models
       return allUserListings;
     }
 
+    public List<Experience> GetUserBookings()
+    {
+      List<Experience> allUserBookings = new List<Experience> {};
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT experiences.* FROM users JOIN bookings ON (users.id = bookings.user_id) JOIN experiences ON (bookings.experience_id = experiences.id) WHERE users.id = @searchId;";
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+      MySqlParameter SearchId = new MySqlParameter();
+      SearchId.ParameterName = "@SearchId";
+      SearchId.Value = this._id;
+      cmd.Parameters.Add(SearchId);
+
+      while(rdr.Read())
+      {
+        int experienceId = rdr.GetInt32(0);
+        int experienceLocationId = rdr.GetInt32(1);
+        int experienceUserId = rdr.GetInt32(2);
+        string experienceTitle = rdr.GetString(3);
+        string experienceDescription = rdr.GetString(4);
+        string experiencsPhotoLink = rdr.GetString(5);
+        int experiencePrice = rdr.GetInt32(6);
+
+        Experience newExperience = new Experience(experienceLocationId, experienceUserId, experienceTitle, experienceDescription, experiencsPhotoLink, experiencePrice, experienceId);
+        allUserBookings.Add(newExperience);
+      }
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return allUserBookings;
+    }
+
     //Experiences and bookings
 
     public void DeleteUser()
