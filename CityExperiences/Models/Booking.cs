@@ -79,7 +79,6 @@ namespace CityExperiences.Models
 
     public string GetGuestName()
     {
-
       MySqlConnection conn = DB.Connection();
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
@@ -274,6 +273,7 @@ namespace CityExperiences.Models
         conn.Dispose();
       }
     }
+
     //
     // public void UpdateBookingName(string newBookingName)
     // {
