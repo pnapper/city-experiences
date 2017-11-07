@@ -314,31 +314,31 @@ namespace CityExperiences.Models
       }
     }
 
-    // public void AddTag(Tag newTag)
-    // {
-    //   MySqlConnection conn = DB.Connection();
-    //   conn.Open();
-    //
-    //   var cmd = conn.CreateCommand() as MySqlCommand;
-    //   cmd.CommandText = @"INSERT INTO experiences_tags (experience_id, tag_id) VALUES (@experienceId, @tagId);";
-    //
-    //   MySqlParameter experienceId = new MySqlParameter();
-    //   experienceId.ParameterName = "@experienceId";
-    //   experienceId.Value = this._id;
-    //   cmd.Parameters.Add(experienceId);
-    //
-    //   MySqlParameter tagId = new MySqlParameter();
-    //   tagId.ParameterName = "@tagId";
-    //   tagId.Value = newAuthor.GetId();
-    //   cmd.Parameters.Add(tagId);
-    //
-    //   cmd.ExecuteNonQuery();
-    //   conn.Close();
-    //   if (conn != null)
-    //   {
-    //     conn.Dispose();
-    //   }
-    // }
+    public void AddTag(Tag newTag)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"INSERT INTO experiences_tags (experience_id, tag_id) VALUES (@experienceId, @tagId);";
+
+      MySqlParameter experienceId = new MySqlParameter();
+      experienceId.ParameterName = "@experienceId";
+      experienceId.Value = this._id;
+      cmd.Parameters.Add(experienceId);
+
+      MySqlParameter tagId = new MySqlParameter();
+      tagId.ParameterName = "@tagId";
+      tagId.Value = newTag.GetId();
+      cmd.Parameters.Add(tagId);
+
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+    }
     //
     // public List<Tag> GetTags()
     // {

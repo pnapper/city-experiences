@@ -21,21 +21,21 @@ namespace CityExperiences.Controllers
       Int32.Parse(userId),
       Request.Form["experience-title"],
       Request.Form["experience-description"],
-      Int32.Parse(Request.Form["experience-location"],
-      Request.Form["experience-title"], Int32.Parse(Request.Form["experience-copies"]));
+      Int32.Parse(Request.Form["experience-photo"],
+      Int32.Parse(Request.Form["experience-price"]));
       newExperience.Save();
-      int authorValue = Int32.Parse(Request.Form["number-loop"]);
-      for(var i=1;i<=authorValue;i++)
+      int TagValue = Int32.Parse(Request.Form["number-loop"]);
+      for(var i=1;i<=TagValue;i++)
       {
-        Author newAuthor = new Author(Request.Form["author-name"+i]);
-        if(newAuthor.IsNewAuthor() == true)
+        Tag newTag = new Tag(Request.Form["tag-name"+i]);
+        if(newTag.IsNewTag() == true)
         {
-          newAuthor.Save();
-          newExperience.AddAuthor(newAuthor);
+          newTag.Save();
+          newTag.AddTag(newTag);
         }
         else
         {
-          Author repeatAuthor = newAuthor.FindAuthor();
-          newExperience.AddAuthor(repeatAuthor);
+          Tag repeatTag = newTag.FindTag();
+          newTag.AddTag(repeatTag);
         }
       }

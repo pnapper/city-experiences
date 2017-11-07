@@ -44,6 +44,37 @@ namespace CityExperiences.Models
       return _id;
     }
 
+    public bool IsNewTag()
+    {
+      bool IsNewTag = true;
+      List<Tag> allTags = new List<Tag> {};
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM tags;";
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      while(rdr.Read())
+      {
+        int TagId = rdr.GetInt32(0);
+        string TagName = rdr.GetString(1);
+        Tag newTag = new Tag(TagName, TagId);
+        allTags.Add(newTag);
+      }
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      foreach (var tag in allTags)
+      {
+        if(tag.GetName() == _name)
+        {
+          IsNewTag = false;
+        }
+      }
+      return IsNewTag;
+    }
+
     public void Save()
     {
       MySqlConnection conn = DB.Connection();
@@ -119,6 +150,36 @@ namespace CityExperiences.Models
         conn.Dispose();
       }
       return newTag;
+    }
+
+    public Tag FindTag()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM tags WHERE name = (@searchName);";
+
+      MySqlParameter searchName = new MySqlParameter();
+      searchName.ParameterName = "@searchName";
+      searchName.Value = _tagName;
+      cmd.Parameters.Add(searchName);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      int TagId = 0;
+      string TagName = "";
+
+      while(rdr.Read())
+      {
+        TagId = rdr.GetInt32(0);
+        TagName = rdr.GetString(1);
+      }
+      Tag foundTag = new Tag(TagName, TagId);
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return foundTag;
     }
 
     public static void DeleteAll()
