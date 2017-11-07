@@ -80,134 +80,200 @@ namespace CityExperiences.Models
     public string GetGuestName()
     {
 
-            MySqlConnection conn = DB.Connection();
-            conn.Open();
-            var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT name FROM users WHERE user_id = @user_id;";
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT name FROM users WHERE users.id = @UserId;";
 
-            MySqlParameter userId = new MySqlParameter();
-            userId.ParameterName = "@user_id";
-            userId.Value = this._id;
-            cmd.Parameters.Add(userId);
-
-
-            var rdr = cmd.ExecuteReader() as MySqlDataReader;
-            string guestName = "";
-
-            while(rdr.Read())
-            {
-              guestName = rdr.GetString(1);
-            }
-            string gname = guestName;
-            conn.Close();
-            if (conn != null)
-            {
-                conn.Dispose();
-            }
-            return gname;
-        }
-
-        public string GetCity()
-        {
-
-                MySqlConnection conn = DB.Connection();
-                conn.Open();
-                var cmd = conn.CreateCommand() as MySqlCommand;
-                cmd.CommandText = @"SELECT cities.name FROM bookings
-                  JOIN experiences ON (bookings.experience_id = experiences.id)
-                  JOIN cities ON (experiences.location_id = cities.id) WHERE bookings.id = @BookingId;";
+      MySqlParameter userId = new MySqlParameter();
+      userId.ParameterName = "@Userid";
+      userId.Value = this._userId;
+      cmd.Parameters.Add(userId);
 
 
-                MySqlParameter bookingId = new MySqlParameter();
-                bookingId.ParameterName = "@BookingId";
-                bookingId.Value = this._id;
-                cmd.Parameters.Add(bookingId);
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      string guestName = "";
+
+      while(rdr.Read())
+      {
+        guestName = rdr.GetString(1);
+      }
+      string gname = guestName;
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return gname;
+    }
+
+    public string GetCity()
+    {
+
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT cities.name FROM bookings
+      JOIN experiences ON (bookings.experience_id = experiences.id)
+      JOIN cities ON (experiences.location_id = cities.id) WHERE bookings.id = @BookingId;";
 
 
-                var rdr = cmd.ExecuteReader() as MySqlDataReader;
-                string cityName = "";
+      MySqlParameter bookingId = new MySqlParameter();
+      bookingId.ParameterName = "@BookingId";
+      bookingId.Value = this._id;
+      cmd.Parameters.Add(bookingId);
 
-                while(rdr.Read())
-                {
-                  cityName = rdr.GetString(1);
-                }
-                string cname = cityName;
-                conn.Close();
-                if (conn != null)
-                {
-                    conn.Dispose();
-                }
-                return cname;
-            }
 
-    // public static List<Booking> GetAll()
-    // {
-    //   List<Booking> allBookings = new List<Booking> {};
-    //   MySqlConnection conn = DB.Connection();
-    //   conn.Open();
-    //   var cmd = conn.CreateCommand() as MySqlCommand;
-    //   cmd.CommandText = @"SELECT * FROM tags;";
-    //   var rdr = cmd.ExecuteReader() as MySqlDataReader;
-    //   while(rdr.Read())
-    //   {
-    //     int tagId = rdr.GetInt32(0);
-    //     string tagName = rdr.GetString(1);
-    //     Booking newBooking = new Booking(tagName, tagId);
-    //     allBookings.Add(newBooking);
-    //   }
-    //   conn.Close();
-    //   if (conn != null)
-    //   {
-    //     conn.Dispose();
-    //   }
-    //   return allBookings;
-    // }
-    //
-    // public static Booking Find(int id)
-    // {
-    //   MySqlConnection conn = DB.Connection();
-    //   conn.Open();
-    //   var cmd = conn.CreateCommand() as MySqlCommand;
-    //   cmd.CommandText = @"SELECT * FROM tags WHERE id = @thisId;";
-    //
-    //   MySqlParameter searchId = new MySqlParameter();
-    //   searchId.ParameterName = "@thisId";
-    //   searchId.Value = id;
-    //   cmd.Parameters.Add(searchId);
-    //
-    //   var rdr = cmd.ExecuteReader() as MySqlDataReader;
-    //
-    //   int tagId = 0;
-    //   string tagName = "";
-    //
-    //   while (rdr.Read())
-    //   {
-    //     tagId = rdr.GetInt32(0);
-    //     tagName = rdr.GetString(1);
-    //   }
-    //
-    //   Booking newBooking= new Booking(tagName, tagId);
-    //   conn.Close();
-    //   if (conn != null)
-    //   {
-    //     conn.Dispose();
-    //   }
-    //   return newBooking;
-    // }
-    //
-    // public static void DeleteAll()
-    // {
-    //   MySqlConnection conn = DB.Connection();
-    //   conn.Open();
-    //   var cmd = conn.CreateCommand() as MySqlCommand;
-    //   cmd.CommandText = @"DELETE FROM tags;";
-    //   cmd.ExecuteNonQuery();
-    //   conn.Close();
-    //   if (conn != null)
-    //   {
-    //     conn.Dispose();
-    //   }
-    // }
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      string cityName = "";
+
+      while(rdr.Read())
+      {
+        cityName = rdr.GetString(1);
+      }
+      string cname = cityName;
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return cname;
+    }
+
+    public string GetExperience()
+    {
+
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT title FROM experiences WHERE experiences.id = @ExperienceId;";
+
+      MySqlParameter experienceId = new MySqlParameter();
+      experienceId.ParameterName = "@ExperienceId";
+      experienceId.Value = this._experienceId;
+      cmd.Parameters.Add(experienceId);
+
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      string guestExperience = "";
+
+      while(rdr.Read())
+      {
+        guestExperience = rdr.GetString(3);
+      }
+      string gexperience = guestExperience;
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return gexperience;
+    }
+
+    public string GetHostbyBooking()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT users.name FROM bookings
+      JOIN experiences ON (bookings.experience_id = experiences.id)
+      JOIN users ON (experiences.user_id = users.id) WHERE bookings.id = @BookingId;";
+
+
+      MySqlParameter bookingId = new MySqlParameter();
+      bookingId.ParameterName = "@BookingId";
+      bookingId.Value = this._id;
+      cmd.Parameters.Add(bookingId);
+
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      string hostName = "";
+
+      while(rdr.Read())
+      {
+        hostName = rdr.GetString(1);
+      }
+      string hname = hostName;
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return hname;
+    }
+
+    public static List<Booking> GetAll()
+    {
+      List<Booking> allBookings = new List<Booking> {};
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM bookings;";
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      while(rdr.Read())
+      {
+        int bookingId = rdr.GetInt32(0);
+        int userId = rdr.GetInt32(1);
+        int experienceId = rdr.GetInt32(2);
+
+        Booking newBooking = new Booking(userId, experienceId, bookingId);
+        allBookings.Add(newBooking);
+      }
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return allBookings;
+    }
+
+    public static Booking Find(int id)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM bookings WHERE id = @thisId;";
+
+      MySqlParameter searchId = new MySqlParameter();
+      searchId.ParameterName = "@thisId";
+      searchId.Value = id;
+      cmd.Parameters.Add(searchId);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+      int bookingId = 0;
+      int userId = 0;
+      int experienceId = 0;
+
+      while (rdr.Read())
+      {
+         bookingId = rdr.GetInt32(0);
+         userId = rdr.GetInt32(1);
+         experienceId = rdr.GetInt32(2);
+      }
+
+      Booking newBooking= new Booking(userId, experienceId, bookingId);
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return newBooking;
+    }
+
+    public static void DeleteAll()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"DELETE FROM bookings;";
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+    }
     //
     // public void UpdateBookingName(string newBookingName)
     // {
@@ -236,24 +302,24 @@ namespace CityExperiences.Models
     //   }
     // }
     //
-    // public void DeleteBooking()
-    // {
-    //   MySqlConnection conn = DB.Connection();
-    //   conn.Open();
-    //   var cmd = conn.CreateCommand() as MySqlCommand;
-    //   cmd.CommandText = @"DELETE FROM tags WHERE id = @BookingId; DELETE FROM experiences_tags WHERE tag_id = @BookingId;";
-    //
-    //   MySqlParameter tagIdParameter = new MySqlParameter();
-    //   tagIdParameter.ParameterName = "@BookingId";
-    //   tagIdParameter.Value = this.GetId();
-    //   cmd.Parameters.Add(tagIdParameter);
-    //
-    //   cmd.ExecuteNonQuery();
-    //   if (conn != null)
-    //   {
-    //     conn.Close();
-    //   }
-    // }
+    public void DeleteBooking()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"DELETE FROM bookings WHERE id = @BookingId;";
+
+      MySqlParameter bookingIdParameter = new MySqlParameter();
+      bookingIdParameter.ParameterName = "@BookingId";
+      bookingIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(bookingIdParameter);
+
+      cmd.ExecuteNonQuery();
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
     //
     // // public void AddExperience(Experience newExperience)
     // // {
@@ -280,41 +346,39 @@ namespace CityExperiences.Models
     // //     }
     // // }
     // //
-    // // public List<Experience> GetBookingExperiences()
-    // // {
-    // //   MySqlConnection conn = DB.Connection();
-    // //   conn.Open();
-    // //   var cmd = conn.CreateCommand() as MySqlCommand;
-    // //   cmd.CommandText = @"SELECT experiences.* FROM tags
-    // //   JOIN experiences_tags ON (tags.id = experiences_tags.tag_id)
-    // //   JOIN experiences ON (experiences_tags.experience_id = experiences.id) WHERE tags.id = @BookingId;";
-    // //
-    // //   MySqlParameter tagId = new MySqlParameter();
-    // //   tagId.ParameterName = "@BookingId";
-    // //   tagId.Value = _id;
-    // //   cmd.Parameters.Add(tagId);
-    // //
-    // //   var rdr = cmd.ExecuteReader() as MySqlDataReader;
-    // //   List<Experience> experiences = new List<Experience>{};
-    // //
-    // //   while(rdr.Read())
-    // //   {
-    // //     int experienceId = rdr.GetInt32(0);
-    // //     int locationId = rdr.GetInt32(1);
-    // //     int userId = rdr.GetInt32(2);
-    // //     string title = rdr.GetString(3);
-    // //     string description = rdr.GetString(4);
-    // //     string photo = rdr.GetString(5);
-    // //     int price = rdr.GetInt32(6);
-    // //     Experience newExperience = new Experience(locationId, userId, title, description, photo, price, experienceId);
-    // //     experiences.Add(newExperience);
-    // //   }
-    // //   conn.Close();
-    // //   if (conn != null)
-    // //   {
-    // //     conn.Dispose();
-    // //   }
-    // //   return experiences;
-    // // }
+    // public List<Experience> GetBookingExperiences()
+    // {
+    //   MySqlConnection conn = DB.Connection();
+    //   conn.Open();
+    //   var cmd = conn.CreateCommand() as MySqlCommand;
+    //   cmd.CommandText = @"SELECT experiences.title FROM experiences WHERE experiences.id = @ExperienceId;";
+    //
+    //   MySqlParameter experienceId = new MySqlParameter();
+    //   experienceId.ParameterName = "@ExperienceId";
+    //   experienceId.Value = _experienceId;
+    //   cmd.Parameters.Add(experienceId);
+    //
+    //   var rdr = cmd.ExecuteReader() as MySqlDataReader;
+    //   List<Experience> experiences = new List<Experience>{};
+    //
+    //   while(rdr.Read())
+    //   {
+    //     int experienceId = rdr.GetInt32(0);
+    //     int locationId = rdr.GetInt32(1);
+    //     int experienceId = rdr.GetInt32(2);
+    //     string title = rdr.GetString(3);
+    //     string description = rdr.GetString(4);
+    //     string photo = rdr.GetString(5);
+    //     int price = rdr.GetInt32(6);
+    //     Experience newExperience = new Experience(locationId, userId, title, description, photo, price, experienceId);
+    //     experiences.Add(newExperience);
+    //   }
+    //   conn.Close();
+    //   if (conn != null)
+    //   {
+    //     conn.Dispose();
+    //   }
+    //   return experiences;
+    // }
   }
 }
