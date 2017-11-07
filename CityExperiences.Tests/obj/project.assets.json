@@ -10752,16 +10752,16 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/Guest/Desktop/city-experiences-app/CityExperiences.Test/CityExperiencesTest.csproj",
-      "projectName": "CityExperiencesTest",
-      "projectPath": "/Users/Guest/Desktop/city-experiences-app/CityExperiences.Test/CityExperiencesTest.csproj",
-      "outputPath": "/Users/Guest/Desktop/city-experiences-app/CityExperiences.Test/obj/",
+      "projectUniqueName": "/Users/Guest/Desktop/city-experiences-app/CityExperiences.Tests/CityExperiences.Tests.csproj",
+      "projectName": "CityExperiences.Tests",
+      "projectPath": "/Users/Guest/Desktop/city-experiences-app/CityExperiences.Tests/CityExperiences.Tests.csproj",
+      "outputPath": "/Users/Guest/Desktop/city-experiences-app/CityExperiences.Tests/obj/",
       "projectStyle": "PackageReference",
       "originalTargetFrameworks": [
         "netcoreapp1.1"
       ],
       "files": {
-        "lib/netcoreapp1.1/CityExperiencesTest.dll": "/Users/Guest/Desktop/city-experiences-app/CityExperiences.Test/bin/placeholder/netcoreapp1.1/CityExperiencesTest.dll"
+        "lib/netcoreapp1.1/CityExperiences.Tests.dll": "/Users/Guest/Desktop/city-experiences-app/CityExperiences.Tests/bin/placeholder/netcoreapp1.1/CityExperiences.Tests.dll"
       },
       "frameworks": {
         "netcoreapp1.1": {

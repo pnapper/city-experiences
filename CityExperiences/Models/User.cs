@@ -9,15 +9,15 @@ namespace CityExperiences.Models
     private int _id;
     private string _name;
     private string _dateOfBirth;
-    private int _cityId;
+    private string _city;
     private string _email;
 
-    public User(string name, string dateOfBirth, int cityId, string email, int id = 0)
+    public User(string name, string dateOfBirth, string city, string email, int id = 0)
     {
       _id = id;
       _name = name;
       _dateOfBirth = dateOfBirth;
-      _cityId = cityId;
+      _city = city;
       _email = email;
     }
 
@@ -36,9 +36,9 @@ namespace CityExperiences.Models
       return _dateOfBirth;
     }
 
-    public int GetCityId()
+    public string GetCity()
     {
-      return _cityId;
+      return _city;
     }
 
     public string GetEmail()
@@ -57,7 +57,7 @@ namespace CityExperiences.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO users (name, dateOfBirth, cityId, email) VALUES (@name, @dateOfBirth, @cityId, @email);";
+      cmd.CommandText = @"INSERT INTO users (name, dateOfBirth, country, email) VALUES (@name, @dateOfBirth, @country, @email);";
 
       MySqlParameter name = new MySqlParameter();
       name.ParameterName = "@name";
@@ -69,10 +69,10 @@ namespace CityExperiences.Models
       dateOfBirth.Value = this._dateOfBirth;
       cmd.Parameters.Add(dateOfBirth);
 
-      MySqlParameter cityId = new MySqlParameter();
-      cityId.ParameterName = "@cityId";
-      cityId.Value = this._cityId;
-      cmd.Parameters.Add(cityId);
+      MySqlParameter city = new MySqlParameter();
+      city.ParameterName = "@city";
+      city.Value = this._city;
+      cmd.Parameters.Add(city);
 
       MySqlParameter email = new MySqlParameter();
       email.ParameterName = "@email";
@@ -104,10 +104,10 @@ namespace CityExperiences.Models
         int userId = rdr.GetInt32(0);
         string userName = rdr.GetString(1);
         string userDateOfBirth = rdr.GetString(2);
-        int userCityId = rdr.GetInt32(3);
+        string userCountry = rdr.GetString(3);
         string userEmail = rdr.GetString(4);
 
-        User newUser = new User(userName, userDateOfBirth, userCityId, userEmail, userId);
+        User newUser = new User(userName, userDateOfBirth, userCountry, userEmail, userId);
         allUsers.Add(newUser);
       }
       conn.Close();
@@ -117,6 +117,7 @@ namespace CityExperiences.Models
       }
       return allUsers;
     }
+
 
     public static User Find(int id)
     {
@@ -135,7 +136,7 @@ namespace CityExperiences.Models
       int userId = 0;
       string userName = "";
       string userDateOfBirth = "";
-      int userCityId = 0;
+      string userCountry = "";
       string userEmail = "";
 
       while(rdr.Read())
@@ -143,10 +144,10 @@ namespace CityExperiences.Models
         userId = rdr.GetInt32(0);
         userName = rdr.GetString(1);
         userDateOfBirth = rdr.GetString(2);
-        userCityId = rdr.GetInt32(3);
+        userCountry = rdr.GetString(3);
         userEmail = rdr.GetString(4);
       }
-      User newUser = new User(userName, userDateOfBirth, userCityId, userEmail, userId);
+      User newUser = new User(userName, userDateOfBirth, userCountry, userEmail, userId);
       conn.Close();
 
       if (conn != null)
@@ -154,6 +155,42 @@ namespace CityExperiences.Models
         conn.Dispose();
       }
       return newUser;
+    }
+
+    public List<Experience> GetUserListings()
+    {
+      List<Experience> allUserListings = new List<Experience> {};
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT experiences.* FROM users JOIN experiences ON (users.id = experiences.user_id) WHERE users.id = @searchId;";
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+      MySqlParameter SearchId = new MySqlParameter();
+      SearchId.ParameterName = "@SearchId";
+      SearchId.Value = this._id;
+      cmd.Parameters.Add(SearchId);
+
+      while(rdr.Read())
+      {
+        int experienceId = rdr.GetInt32(0);
+        int experienceLocationId = rdr.GetInt32(1);
+        int experienceUserId = rdr.GetInt32(2);
+        string experienceTitle = rdr.GetString(3);
+        string experienceDescription = rdr.GetString(4);
+        string experiencsPhotoLink = rdr.GetString(5);
+        int experiencePrice = rdr.GetInt32(6);
+
+        Experience newExperience = new Experience(experienceLocationId, experienceUserId, experienceTitle, experienceDescription, experiencsPhotoLink, experiencePrice, experienceId);
+        allUserListings.Add(newExperience);
+      }
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return allUserListings;
     }
 
     //Experiences and bookings
@@ -164,7 +201,9 @@ namespace CityExperiences.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
+
       cmd.CommandText = @"DELETE FROM users WHERE id = @userId; DELETE FROM experiences WHERE id = @userId; DELETE FROM bookings WHERE id = @userId;";
+
 
       MySqlParameter UserIdParameter = new MySqlParameter();
       UserIdParameter.ParameterName = "@userId";
@@ -178,5 +217,6 @@ namespace CityExperiences.Models
         conn.Close();
       }
     }
+
   }
 }
