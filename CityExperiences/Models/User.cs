@@ -4,7 +4,7 @@ using System;
 
 namespace CityExperiences.Models
 {
-  public class User
+  public class Person
   {
     private int _id;
     private string _name;
@@ -14,7 +14,7 @@ namespace CityExperiences.Models
     private string _password;
     private string _phone;
 
-    public User(string name, string dateOfBirth, string country, string email, string password, string phone, int id = 0)
+    public Person(string name, string dateOfBirth, string country, string email, string password, string phone, int id = 0)
     {
       _id = id;
       _name = name;
@@ -113,9 +113,9 @@ namespace CityExperiences.Models
       }
     }
 
-    public static List<User> GetAll()
+    public static List<Person> GetAll()
     {
-      List<User> allUsers = new List<User> {};
+      List<Person> allPersons = new List<Person> {};
       MySqlConnection conn = DB.Connection();
       conn.Open();
 
@@ -133,19 +133,19 @@ namespace CityExperiences.Models
         string userPassword = rdr.GetString(5);
         string userPhone = rdr.GetString(6);
 
-        User newUser = new User(userName, userDateOfBirth, userCountry, userEmail, userPassword, userPhone, userId);
-        allUsers.Add(newUser);
+        Person newPerson = new Person(userName, userDateOfBirth, userCountry, userEmail, userPassword, userPhone, userId);
+        allPersons.Add(newPerson);
       }
       conn.Close();
       if (conn != null)
       {
         conn.Dispose();
       }
-      return allUsers;
+      return allPersons;
     }
 
 
-    public static User Find(int id)
+    public static Person Find(int id)
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
@@ -177,19 +177,19 @@ namespace CityExperiences.Models
         userPassword = rdr.GetString(5);
         userPhone = rdr.GetString(6);
       }
-      User newUser = new User(userName, userDateOfBirth, userCountry, userEmail, userPassword, userPhone, userId);
+      Person newPerson = new Person(userName, userDateOfBirth, userCountry, userEmail, userPassword, userPhone, userId);
       conn.Close();
 
       if (conn != null)
       {
         conn.Dispose();
       }
-      return newUser;
+      return newPerson;
     }
 
-    public List<Experience> GetUserListings()
+    public List<Experience> GetPersonListings()
     {
-      List<Experience> allUserListings = new List<Experience> {};
+      List<Experience> allPersonListings = new List<Experience> {};
       MySqlConnection conn = DB.Connection();
       conn.Open();
 
@@ -206,26 +206,26 @@ namespace CityExperiences.Models
       {
         int experienceId = rdr.GetInt32(0);
         int experienceLocationId = rdr.GetInt32(1);
-        int experienceUserId = rdr.GetInt32(2);
+        int experiencePersonId = rdr.GetInt32(2);
         string experienceTitle = rdr.GetString(3);
         string experienceDescription = rdr.GetString(4);
         string experiencsPhotoLink = rdr.GetString(5);
         int experiencePrice = rdr.GetInt32(6);
 
-        Experience newExperience = new Experience(experienceLocationId, experienceUserId, experienceTitle, experienceDescription, experiencsPhotoLink, experiencePrice, experienceId);
-        allUserListings.Add(newExperience);
+        Experience newExperience = new Experience(experienceLocationId, experiencePersonId, experienceTitle, experienceDescription, experiencsPhotoLink, experiencePrice, experienceId);
+        allPersonListings.Add(newExperience);
       }
       conn.Close();
       if (conn != null)
       {
         conn.Dispose();
       }
-      return allUserListings;
+      return allPersonListings;
     }
 
-    public List<Experience> GetUserBookings()
+    public List<Experience> GetPersonBookings()
     {
-      List<Experience> allUserBookings = new List<Experience> {};
+      List<Experience> allPersonBookings = new List<Experience> {};
       MySqlConnection conn = DB.Connection();
       conn.Open();
 
@@ -242,26 +242,26 @@ namespace CityExperiences.Models
       {
         int experienceId = rdr.GetInt32(0);
         int experienceLocationId = rdr.GetInt32(1);
-        int experienceUserId = rdr.GetInt32(2);
+        int experiencePersonId = rdr.GetInt32(2);
         string experienceTitle = rdr.GetString(3);
         string experienceDescription = rdr.GetString(4);
         string experiencsPhotoLink = rdr.GetString(5);
         int experiencePrice = rdr.GetInt32(6);
 
-        Experience newExperience = new Experience(experienceLocationId, experienceUserId, experienceTitle, experienceDescription, experiencsPhotoLink, experiencePrice, experienceId);
-        allUserBookings.Add(newExperience);
+        Experience newExperience = new Experience(experienceLocationId, experiencePersonId, experienceTitle, experienceDescription, experiencsPhotoLink, experiencePrice, experienceId);
+        allPersonBookings.Add(newExperience);
       }
       conn.Close();
       if (conn != null)
       {
         conn.Dispose();
       }
-      return allUserBookings;
+      return allPersonBookings;
     }
 
     //Experiences and bookings
 
-    public void DeleteUser()
+    public void DeletePerson()
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
@@ -271,11 +271,11 @@ namespace CityExperiences.Models
       cmd.CommandText = @"DELETE FROM users WHERE id = @userId; DELETE FROM experiences WHERE id = @userId; DELETE FROM bookings WHERE id = @userId;";
 
 
-      MySqlParameter UserIdParameter = new MySqlParameter();
-      UserIdParameter.ParameterName = "@userId";
-      UserIdParameter.Value = this.GetId();
+      MySqlParameter PersonIdParameter = new MySqlParameter();
+      PersonIdParameter.ParameterName = "@userId";
+      PersonIdParameter.Value = this.GetId();
 
-      cmd.Parameters.Add(UserIdParameter);
+      cmd.Parameters.Add(PersonIdParameter);
       cmd.ExecuteNonQuery();
 
       if (conn != null)

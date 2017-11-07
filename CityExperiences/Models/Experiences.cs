@@ -231,6 +231,64 @@ namespace CityExperiences.Models
       return name;
     }
 
+    public string GetHostMobile()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT mobile FROM users WHERE users.id = @userId;";
+
+      MySqlParameter userId = new MySqlParameter();
+      userId.ParameterName = "@userId";
+      userId.Value = this._id;
+      cmd.Parameters.Add(userId);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      string hostMobile = "";
+
+      while(rdr.Read())
+      {
+        hostMobile = rdr.GetString(0);
+      }
+      string mobile = hostMobile;
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+
+      return mobile;
+    }
+
+    public string GetHostEmail()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT email FROM users WHERE users.id = @userId;";
+
+      MySqlParameter userId = new MySqlParameter();
+      userId.ParameterName = "@userId";
+      userId.Value = this._id;
+      cmd.Parameters.Add(userId);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      string hostEmail = "";
+
+      while(rdr.Read())
+      {
+        hostEmail = rdr.GetString(0);
+      }
+      string email = hostEmail;
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+
+      return email;
+    }
+
     public string GetCityName()
     {
       MySqlConnection conn = DB.Connection();
@@ -256,8 +314,8 @@ namespace CityExperiences.Models
       {
         conn.Dispose();
       }
+      return name;
 
-    // return name;
     }
 
     public void UpdateDescription(string newDescription)
@@ -314,31 +372,58 @@ namespace CityExperiences.Models
       }
     }
 
-    // public void AddTag(Tag newTag)
-    // {
-    //   MySqlConnection conn = DB.Connection();
-    //   conn.Open();
-    //
-    //   var cmd = conn.CreateCommand() as MySqlCommand;
-    //   cmd.CommandText = @"INSERT INTO experiences_tags (experience_id, tag_id) VALUES (@experienceId, @tagId);";
-    //
-    //   MySqlParameter experienceId = new MySqlParameter();
-    //   experienceId.ParameterName = "@experienceId";
-    //   experienceId.Value = this._id;
-    //   cmd.Parameters.Add(experienceId);
-    //
-    //   MySqlParameter tagId = new MySqlParameter();
-    //   tagId.ParameterName = "@tagId";
-    //   tagId.Value = newAuthor.GetId();
-    //   cmd.Parameters.Add(tagId);
-    //
-    //   cmd.ExecuteNonQuery();
-    //   conn.Close();
-    //   if (conn != null)
-    //   {
-    //     conn.Dispose();
-    //   }
-    // }
+    public void UpdatePhoto(string newPhoto)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"UPDATE experiences SET photo_link = @newPhoto WHERE id = @searchId;";
+
+      MySqlParameter searchId = new MySqlParameter();
+      searchId.ParameterName = "@searchId";
+      searchId.Value = _id;
+      cmd.Parameters.Add(searchId);
+
+      MySqlParameter photo = new MySqlParameter();
+      photo.ParameterName = "@newPhoto";
+      photo.Value = newPhoto;
+      cmd.Parameters.Add(photo);
+
+      cmd.ExecuteNonQuery();
+      _photo_link = newPhoto;
+
+      conn.Close();
+      if (conn != null)
+      {
+          conn.Dispose();
+      }
+    }
+
+    public void AddTag(Tag newTag)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"INSERT INTO experiences_tags (experience_id, tag_id) VALUES (@experienceId, @tagId);";
+
+      MySqlParameter experienceId = new MySqlParameter();
+      experienceId.ParameterName = "@experienceId";
+      experienceId.Value = this._id;
+      cmd.Parameters.Add(experienceId);
+
+      MySqlParameter tagId = new MySqlParameter();
+      tagId.ParameterName = "@tagId";
+      tagId.Value = newTag.GetId();
+      cmd.Parameters.Add(tagId);
+
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+    }
     //
     // public List<Tag> GetTags()
     // {
