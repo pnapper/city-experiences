@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using System;
 
-namespace CityExperiences.Models;
+namespace CityExperiences.Models
 {
   public class User
   {
@@ -80,12 +80,12 @@ namespace CityExperiences.Models;
       cmd.Parameters.Add(email);
 
       cmd.ExecuteNonQuery();
-      _id = (int) cmd.LastInsertedId();
+      _id = (int) cmd.LastInsertedId;
       conn.Close();
 
       if (conn != null)
       {
-        conn.Dispose()
+        conn.Dispose();
       }
     }
 
@@ -118,7 +118,7 @@ namespace CityExperiences.Models;
       return allUsers;
     }
 
-    public static User Find(int Id)
+    public static User Find(int id)
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
@@ -163,7 +163,9 @@ namespace CityExperiences.Models;
       MySqlConnection conn = DB.Connection();
       conn.Open();
 
-      MySqlCommand = new MySqlCommand("DELETE FROM users WHERE id = @userId; DELETE FROM experiences WHERE id = @userId; DELETE FROM bookings WHERE id = @userId;", conn);
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"DELETE FROM users WHERE id = @userId; DELETE FROM experiences WHERE id = @userId; DELETE FROM bookings WHERE id = @userId;";
+
       MySqlParameter UserIdParameter = new MySqlParameter();
       UserIdParameter.ParameterName = "@userId";
       UserIdParameter.Value = this.GetId();
@@ -173,7 +175,7 @@ namespace CityExperiences.Models;
 
       if (conn != null)
       {
-        conn.Close(); 
+        conn.Close();
       }
     }
   }
