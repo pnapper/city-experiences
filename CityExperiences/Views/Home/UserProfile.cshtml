@@ -57,7 +57,7 @@
           @foreach (var experience in @Model["listings"])
           {
             <tr>
-              <td>@experience.GetTitle()</td>
+              <td><a href="/user/@Model["user"].GetId()/experience/@experience.GetId()/view">@experience.GetTitle()</a></td>
               <td>@experience.GetDescription()</td>
               <td>@experience.GetPrice()</td>
               <td><a href="/user/@Model["user"].GetId()/experience/@experience.GetId()/edit">Edit</td>

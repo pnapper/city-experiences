@@ -286,6 +286,19 @@ namespace CityExperiences.Controllers
       return View("IndexUser", model);
     }
 
+    [HttpGet("/user/{userId}/experience/{experienceId}/edit")]
+    public ActionResult EditExperiences(int userId, int experienceId)
+    {
+      Person thisPerson = Person.Find(userId);
+      Experience thisExperience = Experience.Find(experienceId);
+      Dictionary<string, object> model = new Dictionary<string, object> ();
+
+      model.Add("user", thisPerson);
+      model.Add("experience", thisExperience);
+
+      return View("EditExperience", model);
+    }
+
     [HttpPost("/user/{userId}/experience/{experienceId}/edit")]
     public ActionResult EditExperience(int userId, int experienceId)
     {
