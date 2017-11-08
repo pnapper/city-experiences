@@ -37,6 +37,41 @@ namespace CityExperiences.Models
       return _id;
     }
 
+    public static City Find(int id)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM cities WHERE id = @thisId;";
+
+      MySqlParameter searchId = new MySqlParameter();
+      searchId.ParameterName = "@thisId";
+      searchId.Value = id;
+      cmd.Parameters.Add(searchId);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+      int cityId = 0;
+      string cityName = "";
+      string cityPhoto = "";
+
+      while (rdr.Read())
+      {
+        cityId = rdr.GetInt32(0);
+        cityName = rdr.GetString(1);
+        cityPhoto = rdr.GetString(2);
+
+      }
+
+      City newCity= new City(cityName, cityPhoto, cityId);
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return newCity;
+    }
+
     public static City FindId(string name)
     {
       MySqlConnection conn = DB.Connection();
