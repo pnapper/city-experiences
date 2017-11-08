@@ -59,7 +59,7 @@ namespace CityExperiences.Controllers
       return View("CityExperiences", allCityExperiences);
     }
 
-    //VIEW EXPERIENCES BY TAG & CITY WITHOUT USER LOGIN
+    //VIEW EXPERIENCES BY TAG WITHOUT USER LOGIN
     [HttpGet("/experience/{experienceId}/view")]
     public ActionResult ViewExperience(int userId, int experienceId)
     {
@@ -67,6 +67,16 @@ namespace CityExperiences.Controllers
 
       return View("ViewExperience", thisExperience);
     }
+
+    //VIEW EXPERIENCES BY CITY WITHOUT USER LOGIN
+    [HttpGet("/city/{cityId}/view")]
+    public ActionResult ViewExperiencebycity(int userId, int experienceId)
+    {
+      Experience thisExperience = Experience.Find(experienceId);
+
+      return View("ViewExperience", thisExperience);
+    }
+
 
     //USER PROFILE
     [HttpGet("/user/{userId}/profile")]
