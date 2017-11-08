@@ -27,7 +27,7 @@ namespace CityExperiences.Models
       return _name;
     }
 
-    public string GetLink()
+    public string GetPhotoLink()
     {
       return _link;
     }

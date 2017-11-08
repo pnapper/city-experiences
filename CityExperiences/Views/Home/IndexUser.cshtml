@@ -39,8 +39,11 @@
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
+      @* User Profile *@
       <li><a href="/user/@Model["user"].GetId()/profile"><span class="glyphicon glyphicon-user"></span></a></li>
+      @* Create Experience *@
       <li><a href="/user/@Model["user"].GetId()/experience/new"><span class="glyphicon glyphicon-plus-sign"></span> Create Experience</a></li>
+      @* Logout *@
       <li><a href="/"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
     </ul>
   </div>
@@ -52,7 +55,7 @@
    {
      <div class="col-md-3">
        <div class="well">
-         <a href="experience/@experience.GetId()/view"><img src="@experience.GetPhotoLink()"  height="350" style="width:100%;">
+         <a href="experience/@experience.GetId()/view"><img src="@experience.GetPhotoLink()"  style="width:100%;">
          <div class="bottom-right">@experience.GetTitle()</div></a>
 
        </div>
@@ -66,8 +69,8 @@
     {
       <div class="col-md-3">
         <div class="well">
-          <a href="city/@city.GetId()/view"><img src="@city.GetPhotoLink()"  height="350" style="width:100%;">
-          <div class="bottom-right">@city.GetTitle()</div></a>
+          <a href="city/@city.GetId()/view"><img src="@city.GetPhotoLink()"  style="width:100%;">
+          <div class="bottom-right">@city.GetName()</div></a>
 
         </div>
       </div>
