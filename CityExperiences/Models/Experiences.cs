@@ -211,7 +211,7 @@ namespace CityExperiences.Models
 
       MySqlParameter userId = new MySqlParameter();
       userId.ParameterName = "@userId";
-      userId.Value = this._id;
+      userId.Value = this._user_id;
       cmd.Parameters.Add(userId);
 
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
@@ -248,7 +248,7 @@ namespace CityExperiences.Models
 
       while(rdr.Read())
       {
-        hostMobile = rdr.GetString(0);
+        hostMobile = rdr.GetString(5);
       }
       string mobile = hostMobile;
       conn.Close();
@@ -277,7 +277,7 @@ namespace CityExperiences.Models
 
       while(rdr.Read())
       {
-        hostEmail = rdr.GetString(0);
+        hostEmail = rdr.GetString(4);
       }
       string email = hostEmail;
       conn.Close();

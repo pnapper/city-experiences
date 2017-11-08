@@ -13,7 +13,7 @@ namespace CityExperiences.Models
     public Tag(string tagName, int id = 0)
     {
       _id = id;
-      _tagName = tagName;
+      _tagName = tagName.ToLower();
     }
 
     public override bool Equals(System.Object otherTag)
