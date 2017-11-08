@@ -55,26 +55,20 @@ namespace CityExperiences.Controllers
     {
       City citySearch = City.FindId(Request.Form["city-name"]);
       List<Experience> allCityExperiences = citySearch.GetCityExperiences();
-      Console.WriteLine(allCityExperiences.Count);
       return View("CityExperiences", allCityExperiences);
     }
 
-    //VIEW EXPERIENCES BY TAG WITHOUT USER LOGIN
-    [HttpGet("/experience/{experienceId}/view")]
-    public ActionResult ViewTagExperiences(int userId, int experienceId)
-    {
-      Experience thisExperience = Experience.Find(experienceId);
 
-      return View("ViewExperience", thisExperience);
-    }
 
     //VIEW EXPERIENCES BY CITY WITHOUT USER LOGIN
     [HttpGet("/city/{cityId}/view")]
-    public ActionResult ViewExperiencebycity(int userId, int experienceId)
+    public ActionResult ViewCityExperiences(int cityId)
     {
-      Experience thisExperience = Experience.Find(experienceId);
+      City citySearch = City.Find(cityId);
 
-      return View("ViewExperience", thisExperience);
+      List<Experience> allCityExperiences = citySearch.GetCityExperiences();
+
+      return View("CityExperiences", allCityExperiences);
     }
 
 
@@ -172,13 +166,22 @@ namespace CityExperiences.Controllers
       return View("ViewExperienceUser", model);
     }
 
-    [HttpGet("/experience/{experienceId}/view")]
-    public ActionResult ViewExperience(int userId, int experienceId)
+    [HttpGet("/city/{cityId}/experience/{experienceId}/view")]
+    public ActionResult ViewExperienceFromCity(int experienceId)
     {
 
       Experience thisExperience = Experience.Find(experienceId);
 
-      return View("ViewExperienceUser", thisExperience);
+      return View("ViewExperience", thisExperience);
+    }
+
+    [HttpGet("/experience/{experienceId}/view")]
+    public ActionResult ViewExperience(int experienceId)
+    {
+
+      Experience thisExperience = Experience.Find(experienceId);
+
+      return View("ViewExperience", thisExperience);
     }
 
     [HttpGet("/user/{userId}/experience/new")]
@@ -251,7 +254,7 @@ namespace CityExperiences.Controllers
       model.Add("user", thisPerson);
       model.Add("experience", thisExperience);
 
-      return View("ViewExperience", model);
+      return View("ViewExperienceUser", model);
     }
 
     // [HttpPost("/user/{userId}/experience/{experienceId}/book")]
