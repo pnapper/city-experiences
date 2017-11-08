@@ -3,3 +3,15 @@
     bottom: 20px;
     right: 40px;
 }
+
+.well img {
+  display: block;
+  max-height: 500px;
+  max-width: 500px;
+  width: auto;
+  height: auto;
+}
+
+.headerLogo img {
+  height: 150px;
+}
