@@ -57,7 +57,7 @@ namespace CityExperiences.Controllers
       Dictionary<string, object> model = new Dictionary<string, object> ();
 
       string thiscity = Request.Form["city-name"];
-      City citySearch = City.FindId(thiscity.ToLower());
+      City citySearch = City.FindId(thiscity);
       List<Experience> allCityExperiences = citySearch.GetCityExperiences();
 
       model.Add("city", citySearch);
@@ -67,7 +67,23 @@ namespace CityExperiences.Controllers
       return View("CityExperiences", model);
     }
 
+    //User Books an experiences
+    [HttpGet("/user/{userId}/experience/{experienceId}/book")]
+    public ActionResult BookExperience(int userId, int experienceId)
+    {
+      Dictionary<string, object> model = new Dictionary<string, object> ();
 
+      Person thisPerson = Person.Find(userId);
+      Experience thisExperience = Experience.Find(experienceId);
+      Booking newBooking = new Booking(userId, experienceId);
+      newBooking.Save();
+
+      model.Add("user", thisPerson);
+      model.Add("experience", thisExperience);
+      model.Add("booking", newBooking);
+
+      return View("BookingConfirm", model);
+    }
 
     //VIEW EXPERIENCES BY CITY WITHOUT USER LOGIN
     [HttpGet("/city/{cityId}/view")]
