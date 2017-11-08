@@ -67,7 +67,7 @@ namespace CityExperiences.Controllers
       return View("ViewExperience", thisExperience);
     }
 
-    //User Profile
+    //USER PROFILE
     [HttpGet("/user/{userId}/profile")]
     public ActionResult UserProfile(int userId)
     {
@@ -84,6 +84,18 @@ namespace CityExperiences.Controllers
       return View(model);
     }
 
+    [HttpGet("/signup")]
+    public ActionResult SignUp()
+    {
+      return View();
+    }
+
+    [HttpPost("/user/home")]
+    public ActionResult SignUpPost()
+    {
+      Person newPerson = new Person(Request.Form["name"], Request.Form["dob"],Request.Form["country"], Request.Form["email"], Request.Form["password"], Request.Form["phone"]);
+
+    }
 
 
     [HttpGet("/user/{userId}/experience/{experienceId}/view")]
