@@ -84,6 +84,7 @@ namespace CityExperiences.Controllers
       return View(model);
     }
 
+
     [HttpGet("/signup")]
     public ActionResult SignUp()
     {
@@ -94,6 +95,9 @@ namespace CityExperiences.Controllers
     public ActionResult SignUpPost()
     {
       Person newPerson = new Person(Request.Form["name"], Request.Form["dob"],Request.Form["country"], Request.Form["email"], Request.Form["password"], Request.Form["phone"]);
+      newPerson.Save();
+
+      return View("IndexUser", newPerson);
 
     }
 
