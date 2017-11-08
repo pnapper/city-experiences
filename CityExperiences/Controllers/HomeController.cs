@@ -35,7 +35,7 @@ namespace CityExperiences.Controllers
       model.Add("newest-experiences", newestExperiences);
       model.Add("all-cities", allCities);
 
-      return View("Index", model);
+      return View("IndexUser", model);
     }
 
     //SEARCH EXPERIENCES BY TAG
