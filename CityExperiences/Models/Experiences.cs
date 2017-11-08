@@ -211,7 +211,7 @@ namespace CityExperiences.Models
 
       MySqlParameter userId = new MySqlParameter();
       userId.ParameterName = "@userId";
-      userId.Value = this._id;
+      userId.Value = this._user_id;
       cmd.Parameters.Add(userId);
 
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
@@ -231,33 +231,33 @@ namespace CityExperiences.Models
       return name;
     }
 
-    public string GetHostMobile()
+    public string GetHostPhone()
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"SELECT mobile FROM users WHERE users.id = @userId;";
+      cmd.CommandText = @"SELECT phone FROM users WHERE users.id = @userId;";
 
       MySqlParameter userId = new MySqlParameter();
       userId.ParameterName = "@userId";
-      userId.Value = this._id;
+      userId.Value = this._user_id;
       cmd.Parameters.Add(userId);
 
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
-      string hostMobile = "";
+      string hostPhone = "";
 
       while(rdr.Read())
       {
-        hostMobile = rdr.GetString(0);
+        hostPhone = rdr.GetString(0);
       }
-      string mobile = hostMobile;
+      string phone = hostPhone;
       conn.Close();
       if (conn != null)
       {
         conn.Dispose();
       }
 
-      return mobile;
+      return phone;
     }
 
     public string GetHostEmail()
@@ -269,7 +269,7 @@ namespace CityExperiences.Models
 
       MySqlParameter userId = new MySqlParameter();
       userId.ParameterName = "@userId";
-      userId.Value = this._id;
+      userId.Value = this._user_id;
       cmd.Parameters.Add(userId);
 
       var rdr = cmd.ExecuteReader() as MySqlDataReader;

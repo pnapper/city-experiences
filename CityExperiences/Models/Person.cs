@@ -194,13 +194,16 @@ namespace CityExperiences.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"SELECT experiences.* FROM users JOIN experiences ON (users.id = experiences.user_id) WHERE users.id = @searchId;";
-      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      cmd.CommandText = @"SELECT experiences.* FROM users
+      JOIN experiences ON (users.id = experiences.user_id) WHERE users.id = @SearchId;";
 
       MySqlParameter SearchId = new MySqlParameter();
       SearchId.ParameterName = "@SearchId";
       SearchId.Value = this._id;
       cmd.Parameters.Add(SearchId);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+
 
       while(rdr.Read())
       {
@@ -231,12 +234,14 @@ namespace CityExperiences.Models
 
       var cmd = conn.CreateCommand() as MySqlCommand;
       cmd.CommandText = @"SELECT experiences.* FROM users JOIN bookings ON (users.id = bookings.user_id) JOIN experiences ON (bookings.experience_id = experiences.id) WHERE users.id = @searchId;";
-      var rdr = cmd.ExecuteReader() as MySqlDataReader;
 
       MySqlParameter SearchId = new MySqlParameter();
-      SearchId.ParameterName = "@SearchId";
+      SearchId.ParameterName = "@searchId";
       SearchId.Value = this._id;
       cmd.Parameters.Add(SearchId);
+
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
 
       while(rdr.Read())
       {

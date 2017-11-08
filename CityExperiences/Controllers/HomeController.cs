@@ -35,14 +35,15 @@ namespace CityExperiences.Controllers
       model.Add("newest-experiences", newestExperiences);
       model.Add("all-cities", allCities);
 
-      return View("Index", model);
+      return View("IndexUser", model);
     }
 
     //SEARCH EXPERIENCES BY TAG
     [HttpPost("/experiences/tag/search")]
     public ActionResult ViewTagExperiences()
     {
-      Tag tagSearch = Tag.FindId(Request.Form["tag-name"]);
+      string thistag = Request.Form["tag-name"];
+      Tag tagSearch = Tag.FindId(thistag.ToLower());
       Console.WriteLine(tagSearch);
       List<Experience> allTagExperiences = tagSearch.GetTagExperiences();
 
@@ -53,12 +54,36 @@ namespace CityExperiences.Controllers
     [HttpPost("/experiences/city/search")]
     public ActionResult ViewCityExperiences()
     {
-      City citySearch = City.FindId(Request.Form["city-name"]);
+      Dictionary<string, object> model = new Dictionary<string, object> ();
+
+      string thiscity = Request.Form["city-name"];
+      City citySearch = City.FindId(thiscity);
       List<Experience> allCityExperiences = citySearch.GetCityExperiences();
-      return View("CityExperiences", allCityExperiences);
+
+      model.Add("city", citySearch);
+      model.Add("experiences", allCityExperiences);
+
+
+      return View("CityExperiences", model);
     }
 
+    //User Books an experiences
+    [HttpGet("/user/{userId}/experience/{experienceId}/book")]
+    public ActionResult BookExperience(int userId, int experienceId)
+    {
+      Dictionary<string, object> model = new Dictionary<string, object> ();
 
+      Person thisPerson = Person.Find(userId);
+      Experience thisExperience = Experience.Find(experienceId);
+      Booking newBooking = new Booking(userId, experienceId);
+      newBooking.Save();
+
+      model.Add("user", thisPerson);
+      model.Add("experience", thisExperience);
+      model.Add("booking", newBooking);
+
+      return View("BookingConfirm", model);
+    }
 
     //VIEW EXPERIENCES BY CITY WITHOUT USER LOGIN
     [HttpGet("/city/{cityId}/view")]
@@ -275,6 +300,19 @@ namespace CityExperiences.Controllers
 
 
       return View("IndexUser", model);
+    }
+
+    [HttpGet("/user/{userId}/experience/{experienceId}/edit")]
+    public ActionResult EditExperiences(int userId, int experienceId)
+    {
+      Person thisPerson = Person.Find(userId);
+      Experience thisExperience = Experience.Find(experienceId);
+      Dictionary<string, object> model = new Dictionary<string, object> ();
+
+      model.Add("user", thisPerson);
+      model.Add("experience", thisExperience);
+
+      return View("EditExperience", model);
     }
 
     [HttpPost("/user/{userId}/experience/{experienceId}/edit")]

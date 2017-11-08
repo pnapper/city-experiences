@@ -81,7 +81,7 @@ namespace CityExperiences.Models
 
       MySqlParameter searchName = new MySqlParameter();
       searchName.ParameterName = "@thisName";
-      searchName.Value = name;
+      searchName.Value = name.ToLower();
       cmd.Parameters.Add(searchName);
 
       var rdr = cmd.ExecuteReader() as MySqlDataReader;

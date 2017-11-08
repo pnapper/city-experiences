@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Nov 08, 2017 at 10:37 PM
+-- Generation Time: Nov 08, 2017 at 10:47 PM
 -- Server version: 5.6.35
 -- PHP Version: 7.0.15
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `cityexperiences`
 --
+CREATE DATABASE IF NOT EXISTS `cityexperiences` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `cityexperiences`;
 
 -- --------------------------------------------------------
 

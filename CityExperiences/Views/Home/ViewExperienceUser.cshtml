@@ -55,12 +55,15 @@
 <hr>
   <h2>@Model["experience"].GetTitle()</h2>
   <h2>@Model["experience"].GetCityName()</h2>
-  <h2>Hosted By:@Model["experience"].GetHostName()</h2>
+
+  <h2>Hosted By: @Model["experience"].GetHostName()</h2>
+
   <img src='@Model["experience"].GetPhotoLink()' height = "300px" alt="">
+
   <h2>@Model["experience"].GetDescription()</h2>
   <h2>Price: $@Model["experience"].GetPrice()</h2>
 
-  <form class="" action="/user/@Model["user"].GetId()/experience/@Model["experience"].GetId()/book" method="post">
+  <form class="" action="/user/@Model["user"].GetId()/experience/@Model["experience"].GetId()/book" method="get">
     <button type="submit" class="btn" name="button">Book</button>
   </form> <br>
   @* To build the link to go back- use modal class. *@

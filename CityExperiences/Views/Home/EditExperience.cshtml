@@ -38,11 +38,11 @@
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
-      @* User Profile *@
+      User Profile
       <li><a href="/user/@Model["user"].GetId()/profile"><span class="glyphicon glyphicon-user"></span></a></li>
-      @* Create Experience *@
+      Create Experience
       <li><a href="/user/@Model["user"].GetId()/experience/new"><span class="glyphicon glyphicon-plus-sign"></span> Create Experience</a></li>
-      @* Logout *@
+      Logout
       <li><a href="/"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
     </ul>
   </div>
@@ -61,7 +61,7 @@
     <label for="experience-photo">Photo Link</label>
     <input type="text" name="experience-photo" onfocus="this.value=''" value="@Model["experience"].GetPhotoLink()">
     <br>
-    <label for="experience-price">Photo Link</label>
+    <label for="experience-price">Price</label>
     <input type="text" name="experience-price" onfocus="this.value=''" value="@Model["experience"].GetPrice()">
     <br>
     <button type="submit" name="button">Update</button>
