@@ -14,7 +14,7 @@ namespace CityExperiences.Models
     private string _password;
     private string _phone;
 
-    public Person(string name, string dateOfBirth, string country, string email, string password, string phone, int id = 0)
+    public Person(string name, string dateOfBirth, string country, string email, string phone, string password,  int id = 0)
     {
       _id = id;
       _name = name;
@@ -71,7 +71,7 @@ namespace CityExperiences.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO users (name, dateOfBirth, country, email, password, phone) VALUES (@name, @dateOfBirth, @country, @email, @password, @phone);";
+      cmd.CommandText = @"INSERT INTO users (name, dateOfBirth, country, email, phone, password) VALUES (@name, @dateOfBirth, @country, @email, @phone, @password);";
 
       MySqlParameter name = new MySqlParameter();
       name.ParameterName = "@name";
@@ -130,10 +130,10 @@ namespace CityExperiences.Models
         string userDateOfBirth = rdr.GetString(2);
         string userCountry = rdr.GetString(3);
         string userEmail = rdr.GetString(4);
-        string userPassword = rdr.GetString(5);
-        string userPhone = rdr.GetString(6);
+        string userPassword = rdr.GetString(6);
+        string userPhone = rdr.GetString(5);
 
-        Person newPerson = new Person(userName, userDateOfBirth, userCountry, userEmail, userPassword, userPhone, userId);
+        Person newPerson = new Person(userName, userDateOfBirth, userCountry, userEmail,  userPhone, userPassword, userId);
         allPersons.Add(newPerson);
       }
       conn.Close();
@@ -174,10 +174,10 @@ namespace CityExperiences.Models
         userDateOfBirth = rdr.GetString(2);
         userCountry = rdr.GetString(3);
         userEmail = rdr.GetString(4);
-        userPassword = rdr.GetString(5);
-        userPhone = rdr.GetString(6);
+        userPassword = rdr.GetString(6);
+        userPhone = rdr.GetString(5);
       }
-      Person newPerson = new Person(userName, userDateOfBirth, userCountry, userEmail, userPassword, userPhone, userId);
+      Person newPerson = new Person(userName, userDateOfBirth, userCountry, userEmail,  userPhone, userPassword, userId);
       conn.Close();
 
       if (conn != null)

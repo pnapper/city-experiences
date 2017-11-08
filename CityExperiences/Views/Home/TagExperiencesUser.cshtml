@@ -19,16 +19,16 @@
   </div>
 </nav>
 
-<h2>City Experiences</h2>
+<h2>Tag Experiences</h2>
 <div class="row">
-  @foreach(var experience in @Model)
-  {
-      <div class="col-md-3">
-        <div class="well">
-          <a href="experience/@experience.GetId()/view"><img src="@experience.GetPhotoLink()"  height="350" style="width:100%;">
-          <div class="bottom-right">@experience.GetTitle()</div></a>
+   @foreach(var experience in @Model)
+   {
+       <div class="col-md-3">
+         <div class="well">
+           <a href="experience/@experience.GetId()/view"><img src="@experience.GetPhotoLink()"  height="350" style="width:100%;">
+           <div class="bottom-right">@experience.GetTitle()</div></a>
 
-        </div>
-      </div>
+         </div>
+       </div>
 }
   </div>

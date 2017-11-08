@@ -37,6 +37,41 @@ namespace CityExperiences.Models
       return _id;
     }
 
+    public static City FindId(string name)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM cities WHERE name = @thisName;";
+
+      MySqlParameter searchName = new MySqlParameter();
+      searchName.ParameterName = "@thisName";
+      searchName.Value = name;
+      cmd.Parameters.Add(searchName);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+      int cityId = 0;
+      string cityName = "";
+      string cityPhoto = "";
+
+      while (rdr.Read())
+      {
+        cityId = rdr.GetInt32(0);
+        cityName = rdr.GetString(1);
+        cityPhoto = rdr.GetString(2);
+
+      }
+
+      City newCity= new City(cityName, cityPhoto, cityId);
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return newCity;
+    }
+
     public static List<City> GetAll()
     {
       List<City> allCities = new List<City> {};
@@ -44,7 +79,7 @@ namespace CityExperiences.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"SELECT * FROM name;";
+      cmd.CommandText = @"SELECT * FROM cities;";
 
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
       while(rdr.Read())
@@ -72,12 +107,12 @@ namespace CityExperiences.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"SELECT experiences.* FROM cities JOIN experiences ON (cities.id = experiences.location_id) WHERE cities.id = searchId;";
+      cmd.CommandText = @"SELECT experiences.* FROM cities JOIN experiences ON (cities.id = experiences.location_id) WHERE cities.name = @searchName;";
 
-      MySqlParameter searchId = new MySqlParameter();
-      searchId.ParameterName = "@searchId";
-      searchId.Value = this._id;
-      cmd.Parameters.Add(searchId);
+      MySqlParameter searchName = new MySqlParameter();
+      searchName.ParameterName = "@searchName";
+      searchName.Value = this._name;
+      cmd.Parameters.Add(searchName);
 
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
       int experiencesId = 0;
@@ -87,8 +122,6 @@ namespace CityExperiences.Models
       string experiencesDescription = "";
       string experiencesPhotoLink = "";
       int experiencesPrice = 0;
-
-
 
       while(rdr.Read())
       {
