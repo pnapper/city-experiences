@@ -173,12 +173,12 @@ namespace CityExperiences.Controllers
     }
 
     [HttpGet("/experience/{experienceId}/view")]
-    public ActionResult ViewExperience(int userId, int experienceId)
+    public ActionResult ViewExperience(int experienceId)
     {
 
       Experience thisExperience = Experience.Find(experienceId);
 
-      return View("ViewExperienceUser", thisExperience);
+      return View("ViewExperience", thisExperience);
     }
 
     [HttpGet("/user/{userId}/experience/new")]
