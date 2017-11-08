@@ -61,7 +61,7 @@ namespace CityExperiences.Controllers
 
     //VIEW EXPERIENCES BY TAG WITHOUT USER LOGIN
     [HttpGet("/experience/{experienceId}/view")]
-    public ActionResult ViewExperience(int userId, int experienceId)
+    public ActionResult ViewTagExperiences(int userId, int experienceId)
     {
       Experience thisExperience = Experience.Find(experienceId);
 
@@ -172,6 +172,15 @@ namespace CityExperiences.Controllers
       return View("ViewExperienceUser", model);
     }
 
+    [HttpGet("/experience/{experienceId}/view")]
+    public ActionResult ViewExperience(int userId, int experienceId)
+    {
+
+      Experience thisExperience = Experience.Find(experienceId);
+
+      return View("ViewExperienceUser", thisExperience);
+    }
+
     [HttpGet("/user/{userId}/experience/new")]
     public ActionResult CreateExperience(int userId)
     {
@@ -188,6 +197,7 @@ namespace CityExperiences.Controllers
     [HttpPost("/user/{userId}/experience/add")]
     public ActionResult AddViewExperience(int userId)
     {
+      Dictionary<string, object> model = new Dictionary<string, object> ();
 
       Person thisPerson = Person.Find(userId);
       int UserId = userId;
@@ -216,7 +226,15 @@ namespace CityExperiences.Controllers
           newExperience.AddTag(repeatTag);
         }
       }
-      return View("IndexUser", thisPerson);
+      List<Experience> newestExperiences = Experience.GetAll();
+      List<City> allCities = City.GetAll();
+
+      model.Add("user", thisPerson);
+      model.Add("newest-experiences", newestExperiences);
+      model.Add("all-cities", allCities);
+
+
+      return View("IndexUser", model);
     }
 
     [HttpPost("/user/{userId}/experience/{experienceId}/edit")]
