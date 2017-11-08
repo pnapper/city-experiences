@@ -43,6 +43,7 @@ namespace CityExperiences.Controllers
     public ActionResult ViewTagExperiences()
     {
       Tag tagSearch = Tag.FindId(Request.Form["tag-name"]);
+      Console.WriteLine(tagSearch);
       List<Experience> allTagExperiences = tagSearch.GetTagExperiences();
 
       return View("TagExperiences", allTagExperiences);
@@ -54,7 +55,7 @@ namespace CityExperiences.Controllers
     {
       City citySearch = City.FindId(Request.Form["city-name"]);
       List<Experience> allCityExperiences = citySearch.GetCityExperiences();
-
+      Console.WriteLine(allCityExperiences.Count);
       return View("CityExperiences", allCityExperiences);
     }
 
@@ -102,6 +103,7 @@ namespace CityExperiences.Controllers
 
       List<Person> allUsers = Person.GetAll();
 
+
       foreach (var person in allUsers)
       {
         if(person.GetName() == username && person.GetPassword() == password)
@@ -115,13 +117,9 @@ namespace CityExperiences.Controllers
 
           return View("IndexUser", model);
         }
-        else
-        {
-          // alert("Incorrect Information. Please enter again or sign up.");
-          return View("Login");
-        }
+
       }
-      return View("Index");
+      return View("Login");
     }
 
     // User Signup Page
@@ -183,11 +181,11 @@ namespace CityExperiences.Controllers
 
       Person thisPerson = Person.Find(userId);
       int UserId = userId;
-      Console.WriteLine("location id"+Request.Form["experience-location"]);
-      Console.WriteLine("experience title"+Request.Form["experience-title"]);
-      Console.WriteLine("experience description"+Request.Form["experience-description"]);
-      Console.WriteLine("experience-photo"+Request.Form["experience-photo"]);
-      Console.WriteLine("experience-price"+Request.Form["experience-price"]);
+      // Console.WriteLine("location id"+Request.Form["experience-location"]);
+      // Console.WriteLine("experience title"+Request.Form["experience-title"]);
+      // Console.WriteLine("experience description"+Request.Form["experience-description"]);
+      // Console.WriteLine("experience-photo"+Request.Form["experience-photo"]);
+      // Console.WriteLine("experience-price"+Request.Form["experience-price"]);
       Experience newExperience = new Experience(Int32.Parse(Request.Form["experience-location"]),
       UserId, Request.Form["experience-title"], Request.Form["experience-description"], Request.Form["experience-photo"], Int32.Parse(Request.Form["experience-price"]));
       newExperience.Save();
@@ -208,7 +206,7 @@ namespace CityExperiences.Controllers
           newExperience.AddTag(repeatTag);
         }
       }
-      return View("IndexPerson", thisPerson);
+      return View("IndexUser", thisPerson);
     }
 
     [HttpPost("/user/{userId}/experience/{experienceId}/edit")]
