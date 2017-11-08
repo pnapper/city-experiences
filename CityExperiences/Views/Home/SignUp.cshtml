@@ -1,37 +1,38 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
+@{
+  Layout = "_Layout";
+}
+
+@section scripts {
+
+}
   <body>
     <div class="jumbotron">
       <h1>City Experiences</h1>
     </div>
     <div class="signupForm">
       <div id="formOne">
-        <form class="form-group" action="/user/home" method="post">
+        <form class="form-group" action="/user/home/signup" method="post">
           <label for="name">What is your name?</label>
-          <input type="text" name="name">
+          <input type="text" class="form-control" style="width:30%" name="name">
           <br>
           <label for="dob">What is your birthday? (MM/DD/YYYY)</label>
-          <input type="text" name="dob">
+          <input type="date" class="form-control" style="width:30%" name="dob">
           <br>
           <label for="country">What country are you from?</label>
-          <input type="text" name="country">
+          <input type="text" class="form-control" style="width:30%" name="country">
           <br>
           <label for="password">What is your desired password?</label>
-          <input type="text" name="password">
+          <input type="text" class="form-control" style="width:30%" name="password">
           <br>
           <label for="email">What is your email address?</label>
-          <input type="text" name="email">
+          <input type="text" class="form-control" style="width:30%" name="email">
           <br>
           <label for="phone">What is your phone number?</label>
-          <input type="text" name="name" value="(xxx)xxx-xxxx">
-          <button type="submit" name="button">Sign up!</button>
+          <input type="text" class="form-control" style="width:30%" name="phone" value="(xxx)xxx-xxxx"><br>
+          <button type="submit" class="btn btn-info" name="button">Sign up!</button>
         </form>
-        <form class="form-group" action="/Login" method="post">
-          <button type="submit" name="button">Go back to login</button>
+        <form class="form-group" class="btn btn-info" action="/Login" method="post">
+          <button type="submit" class="btn btn-info" name="button">Go back to login</button>
         </form>
       </div>
     </div>

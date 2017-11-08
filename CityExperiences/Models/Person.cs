@@ -71,7 +71,7 @@ namespace CityExperiences.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO users (name, dateOfBirth, country, email, phone, password) VALUES (@name, @dateOfBirth, @country, @email, @phone, @password);";
+      cmd.CommandText = @"INSERT INTO users (name, date_of_birth, country, email, phone, password) VALUES (@name, @dateOfBirth, @country, @email, @phone, @password);";
 
       MySqlParameter name = new MySqlParameter();
       name.ParameterName = "@name";
