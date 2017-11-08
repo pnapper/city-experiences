@@ -8,14 +8,98 @@ namespace CityExperiences.Controllers
 {
   public class HomeController : Controller
   {
+    //GUEST LANDING PAGE
     [HttpGet("/")]
     public ActionResult Index()
+    {
+      Dictionary<string, object> model = new Dictionary<string, object> ();
+      List<Experience> newestExperiences = Experience.GetAll();
+      List<City> allCities = City.GetAll();
+
+      model.Add("newest-experiences", newestExperiences);
+      model.Add("all-cities", allCities);
+
+      return View("Index", model);
+    }
+
+    //USER LANDING PAGE
+    [HttpGet("/user/{userId}/home")]
+    public ActionResult IndexUser(int userId)
+    {
+      Dictionary<string, object> model = new Dictionary<string, object> ();
+      Person thisPerson = Person.Find(userId);
+      List<Experience> newestExperiences = Experience.GetAll();
+      List<City> allCities = City.GetAll();
+
+      model.Add("user", thisPerson);
+      model.Add("newest-experiences", newestExperiences);
+      model.Add("all-cities", allCities);
+
+      return View("Index", model);
+    }
+
+    //SEARCH EXPERIENCES BY TAG
+    [HttpPost("/experiences/tag/search")]
+    public ActionResult ViewTagExperiences()
+    {
+      Tag tagSearch = Tag.FindId(Request.Form["tag-name"]);
+      List<Experience> allTagExperiences = tagSearch.GetTagExperiences();
+
+      return View("TagExperiences", allTagExperiences);
+    }
+
+    //SEARCH EXPERIENCES BY CITY
+    [HttpPost("/experiences/city/search")]
+    public ActionResult ViewCityExperiences()
+    {
+      City citySearch = City.FindId(Request.Form["city-name"]);
+      List<Experience> allCityExperiences = citySearch.GetCityExperiences();
+
+      return View("CityExperiences", allCityExperiences);
+    }
+
+    //VIEW EXPERIENCES BY TAG & CITY WITHOUT USER LOGIN
+    [HttpGet("/experience/{experienceId}/view")]
+    public ActionResult ViewExperience(int userId, int experienceId)
+    {
+      Experience thisExperience = Experience.Find(experienceId);
+
+      return View("ViewExperience", thisExperience);
+    }
+
+    //USER PROFILE
+    [HttpGet("/user/{userId}/profile")]
+    public ActionResult UserProfile(int userId)
+    {
+      Dictionary<string, object> model = new Dictionary<string, object> ();
+
+      Person thisPerson = Person.Find(int userId);
+      List<Experience> userListings = thisPerson.GetPersonListings();
+      List<Booking> userBookings = thisPerson.GetPersonBookings();
+
+      model.Add("user", thisPerson);
+      model.Add("listings", userListings);
+      model.Add("bookings", userBookings);
+
+      return View(model);
+    }
+
+    [HttpGet("/signup")]
+    public ActionResult SignUp()
     {
       return View();
     }
 
+    [HttpPost("/user/home")]
+    public ActionResult SignUpPost()
+    {
+      Person newPerson = new Person(Request.Form["name"], Request.Form["dob"],Request.Form["country"], Request.Form["email"], Request.Form["password"], Request.Form["phone"]);
+
+    }
+
+
     [HttpGet("/user/{userId}/experience/{experienceId}/view")]
-    public ActionResult ViewExperience(int userId, int experienceId)
+    public ActionResult ViewExperienceUser(int userId, int experienceId)
     {
       Dictionary<string, object> model = new Dictionary<string, object> ();
 
@@ -25,7 +109,7 @@ namespace CityExperiences.Controllers
       model.Add("user", thisPerson);
       model.Add("experience", thisExperience);
 
-      return View("ViewExperience", model);
+      return View("ViewExperienceUser", model);
     }
 
     [HttpPost("/user/{userId}/experience/new")]

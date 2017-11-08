@@ -152,6 +152,38 @@ namespace CityExperiences.Models
       return newTag;
     }
 
+    public static Tag FindId(string name)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM tags WHERE name = @thisName;";
+
+      MySqlParameter searchName = new MySqlParameter();
+      searchName.ParameterName = "@thisName";
+      searchName.Value = name;
+      cmd.Parameters.Add(searchName);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+      int tagId = 0;
+      string tagName = "";
+
+      while (rdr.Read())
+      {
+        tagId = rdr.GetInt32(0);
+        tagName = rdr.GetString(1);
+      }
+
+      Tag newTag= new Tag(tagName, tagId);
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return newTag;
+    }
+
     public Tag FindTag()
     {
       MySqlConnection conn = DB.Connection();
@@ -267,41 +299,41 @@ namespace CityExperiences.Models
     //     }
     // }
     //
-    // public List<Experience> GetTagExperiences()
-    // {
-    //   MySqlConnection conn = DB.Connection();
-    //   conn.Open();
-    //   var cmd = conn.CreateCommand() as MySqlCommand;
-    //   cmd.CommandText = @"SELECT experiences.* FROM tags
-    //   JOIN experiences_tags ON (tags.id = experiences_tags.tag_id)
-    //   JOIN experiences ON (experiences_tags.experience_id = experiences.id) WHERE tags.id = @TagId;";
-    //
-    //   MySqlParameter tagId = new MySqlParameter();
-    //   tagId.ParameterName = "@TagId";
-    //   tagId.Value = _id;
-    //   cmd.Parameters.Add(tagId);
-    //
-    //   var rdr = cmd.ExecuteReader() as MySqlDataReader;
-    //   List<Experience> experiences = new List<Experience>{};
-    //
-    //   while(rdr.Read())
-    //   {
-    //     int experienceId = rdr.GetInt32(0);
-    //     int locationId = rdr.GetInt32(1);
-    //     int userId = rdr.GetInt32(2);
-    //     string title = rdr.GetString(3);
-    //     string description = rdr.GetString(4);
-    //     string photo = rdr.GetString(5);
-    //     int price = rdr.GetInt32(6);
-    //     Experience newExperience = new Experience(locationId, userId, title, description, photo, price, experienceId);
-    //     experiences.Add(newExperience);
-    //   }
-    //   conn.Close();
-    //   if (conn != null)
-    //   {
-    //     conn.Dispose();
-    //   }
-    //   return experiences;
-    // }
+    public List<Experience> GetTagExperiences()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT experiences.* FROM tags
+      JOIN experiences_tags ON (tags.id = experiences_tags.tag_id)
+      JOIN experiences ON (experiences_tags.experience_id = experiences.id) WHERE tags.name = @TagName;";
+
+      MySqlParameter tagname = new MySqlParameter();
+      tagname.ParameterName = "@TagName";
+      tagname.Value = _tagName;
+      cmd.Parameters.Add(tagname);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      List<Experience> experiences = new List<Experience>{};
+
+      while(rdr.Read())
+      {
+        int experienceId = rdr.GetInt32(0);
+        int locationId = rdr.GetInt32(1);
+        int userId = rdr.GetInt32(2);
+        string title = rdr.GetString(3);
+        string description = rdr.GetString(4);
+        string photo = rdr.GetString(5);
+        int price = rdr.GetInt32(6);
+        Experience newExperience = new Experience(locationId, userId, title, description, photo, price, experienceId);
+        experiences.Add(newExperience);
+      }
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return experiences;
+    }
   }
 }

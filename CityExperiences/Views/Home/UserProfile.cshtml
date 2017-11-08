@@ -9,17 +9,33 @@
     <title></title>
   </head>
   <body>
+    <header>
+      <img src="https://static1.squarespace.com/static/59789abccd0f68d2902de57e/t/59a55900d2b857e7725bd187/1509539354065/" width="100" height="100"alt="">
+
+     <h1>
+         City Experiences
+     </h1>
+   </header>
+   <nav class="navbar navbar-inverse">
+     <div class="container-fluid">
+       <div class="navbar-header">
+         <a class="navbar-brand" href="#">City Experiences</a>
+       </div>
+       <ul class="nav navbar-nav">
+         <li class="active"><a href="/user/@Model["user"].GetId()/home">Home</a></li>
+       </ul>
+     </div>
+   </nav>
     <div class="jumbotron">
       <h1>City Experiences</h1>
     </div>
     <div class="box">
       <h2>User Information</h2>
-      <h3>Name: @Model["User"].GetName()</h3>
-      <h3>Birthday: @Model["User"].GetDateOfBirth()</h3>
-      <h3>Country: @Model["User"].GetCountry()</h3>
-      <h3>Email: @Model["User"].GetEmail()</h3>
-      @* <h3>Password: @Model["User"].GetPassword()</h3> *@
-      <h3>Phone Number: @Model["User"].GetPhone()</h3>
+      <h3>Name: @Model["user"].GetName()</h3>
+      <h3>Birthday: @Model["user"].GetDateOfBirth()</h3>
+      <h3>Country: @Model["user"].GetCountry()</h3>
+      <h3>Email: @Model["user"].GetEmail()</h3>
+      <h3>Phone Number: @Model["user"].GetPhone()</h3>
     </div>
     <div class="row">
       <div class="listingBox">
@@ -32,13 +48,13 @@
             <th>Edit Listing</th>
           </tr>
 
-          @foreach (var experience in @Model.Experiences)
+          @foreach (var experience in @Model["listings"])
           {
             <tr>
               <td>@experience.GetTitle()</td>
               <td>@experience.GetDescription()</td>
               <td>@experience.GetPrice()</td>
-              <td><a href="/user/@Model["user"].GetId()/experience/@Model["experience"].GetId()/edit">Edit</td>
+              <td><a href="/user/@Model["user"].GetId()/experience/@experience.GetId()/edit">Edit</td>
             </tr>
           }
         </table>
@@ -57,7 +73,7 @@
           @foreach (var booking in @Model["bookings"])
           {
             <tr>
-            <td><a href="/user/@Model["user"].GetId()/experience/@Model["experience"].GetId()/view">@booking.GetExperienceTitle()</td>
+            <td><a href="/user/@Model["user"].GetId()/experience/@booking.GetExperienceId()/view">@booking.GetExperienceTitle()</td>
               <td>@booking.GetHostName()</td>
               <td>@booking.GetHostEmail()</td>
               <td>@booking.GetHostPhone()</td>
@@ -67,8 +83,5 @@
 
       </div>
     </div>
-    <form class="form-group" action="/" method="post">
-      <button type="submit" name="button">Home</button>
-    </form>
   </body>
 </html>

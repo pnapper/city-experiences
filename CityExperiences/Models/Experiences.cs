@@ -179,7 +179,7 @@ namespace CityExperiences.Models
       MySqlConnection conn = DB.Connection();
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"SELECT * FROM experiences;";
+      cmd.CommandText = @"SELECT * FROM experiences ORDER BY id DESC;";
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
       while(rdr.Read())
       {

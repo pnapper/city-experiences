@@ -21,14 +21,14 @@
 
 <h2>City Experiences</h2>
 <div class="row">
-   @foreach(var img in @city.GetPhotoLink())
-   {
-       <div class="col-md-3">
-         <div class="well">
-           <img src="https://s-media-cache-ak0.pinimg.com/originals/3e/c9/3e/3ec93e39bd3840081e6349db501f5c3b.jpg"  height="350" style="width:100%;">
-           <div class="bottom-right">Experience</div>
+  @foreach(var experience in @Model)
+  {
+      <div class="col-md-3">
+        <div class="well">
+          <a href="experience/@experience.GetId()/view"><img src="@experience.GetPhotoLink()"  height="350" style="width:100%;">
+          <div class="bottom-right">@experience.GetTitle()</div></a>
 
-         </div>
-       </div>
+        </div>
+      </div>
 }
   </div>
