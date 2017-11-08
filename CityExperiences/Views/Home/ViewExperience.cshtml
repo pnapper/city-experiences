@@ -11,10 +11,10 @@
 <hr>
   <h2>@Model.GetTitle()</h2>
   <h2>@Model.GetCityName()</h2>
-  <h2>@Model.GetHostName()</h2>
+  <h2>Hosted By: @Model.GetHostName()</h2>
   <img src='@Model.GetPhotoLink()' alt="">
   <h2>@Model.GetDescription()</h2>
-  <h2>@Model.GetPrice()</h2>
+  <h2>Price: $@Model.GetPrice()</h2>
 
   <form class="" action="/login" method="post">
     <button type="submit" class="btn" name="button">Book</button>
