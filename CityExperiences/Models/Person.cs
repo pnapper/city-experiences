@@ -189,18 +189,20 @@ namespace CityExperiences.Models
 
     public List<Experience> GetPersonListings()
     {
-      List<Experience> allPersonListings = new List<Experience> {};
       MySqlConnection conn = DB.Connection();
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"SELECT experiences.* FROM users JOIN experiences ON (users.id = experiences.user_id) WHERE users.id = @searchId;";
-      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      cmd.CommandText = @"SELECT experiences.* FROM users
+      JOIN experiences ON (users.id = experiences.user_id) WHERE users.id = @SearchId;";
 
       MySqlParameter SearchId = new MySqlParameter();
       SearchId.ParameterName = "@SearchId";
       SearchId.Value = this._id;
       cmd.Parameters.Add(SearchId);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      List<Experience> allPersonListings = new List<Experience> {};
 
       while(rdr.Read())
       {
@@ -225,18 +227,19 @@ namespace CityExperiences.Models
 
     public List<Experience> GetPersonBookings()
     {
-      List<Experience> allPersonBookings = new List<Experience> {};
       MySqlConnection conn = DB.Connection();
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
       cmd.CommandText = @"SELECT experiences.* FROM users JOIN bookings ON (users.id = bookings.user_id) JOIN experiences ON (bookings.experience_id = experiences.id) WHERE users.id = @searchId;";
-      var rdr = cmd.ExecuteReader() as MySqlDataReader;
 
       MySqlParameter SearchId = new MySqlParameter();
-      SearchId.ParameterName = "@SearchId";
+      SearchId.ParameterName = "@searchId";
       SearchId.Value = this._id;
       cmd.Parameters.Add(SearchId);
+
+      List<Experience> allPersonBookings = new List<Experience> {};
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
 
       while(rdr.Read())
       {

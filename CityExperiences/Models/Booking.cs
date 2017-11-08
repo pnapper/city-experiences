@@ -96,7 +96,7 @@ namespace CityExperiences.Models
 
       while(rdr.Read())
       {
-        guestName = rdr.GetString(1);
+        guestName = rdr.GetString(0);
       }
       string gname = guestName;
       conn.Close();
@@ -159,7 +159,7 @@ namespace CityExperiences.Models
 
       while(rdr.Read())
       {
-        guestExperience = rdr.GetString(3);
+        guestExperience = rdr.GetString(0);
       }
       string gexperience = guestExperience;
       conn.Close();
@@ -191,7 +191,7 @@ namespace CityExperiences.Models
 
       while(rdr.Read())
       {
-        hostName = rdr.GetString(1);
+        hostName = rdr.GetString(0);
       }
       string hostname = hostName;
       conn.Close();
