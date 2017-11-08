@@ -1,6 +1,11 @@
 @{
   Layout = "_Layout";
 }
+
+@section scripts {
+
+}
+
 <header>
   <img src="https://static1.squarespace.com/static/59789abccd0f68d2902de57e/t/59a55900d2b857e7725bd187/1509539354065/" width="100" height="100"alt="">
 
@@ -8,66 +13,69 @@
     City Experiences
   </h1>
 
-
 </header>
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="#">City Experiences</a>
     </div>
+
     <ul class="nav navbar-nav">
       <li class="active"><a href="/user/@Model["user"].GetId()/home">Home</a></li>
-      <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search By Keyword">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search By City">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
+
+      <form class="navbar-form navbar-left" action="/experiences/tag/search" method="post">
+      <div class="form-group">
+        <input type="text" class="form-control" action="/experiences/tag/search" method="post" placeholder="Search By Keyword">
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+
+      <form class="navbar-form navbar-left" action="/experiences/city/search" method="post">
+      <div class="form-group">
+        <input type="text" class="form-control" name="city-name" placeholder="Search By City">
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
     </ul>
+
     <ul class="nav navbar-nav navbar-right">
+      @* User Profile *@
       <li><a href="/user/@Model["user"].GetId()/profile"><span class="glyphicon glyphicon-user"></span></a></li>
-      <li><a href="/user/@Model["user"].GetId()/experience/new"><span class="glyphicon glyphicon-plus-sign"></span> Create</a></li>
-      <li><a href="/"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+      @* Create Experience *@
+      <li><a href="/user/@Model["user"].GetId()/experience/new"><span class="glyphicon glyphicon-plus-sign"></span> Create Experience</a></li>
+      @* Logout *@
+      <li><a href="/"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
     </ul>
   </div>
 </nav>
 
 <h2>New Experiences</h2>
 <div class="row">
-  @* @foreach(var img in @experience.GetPhotoLink().Take(4))
-  { *@
-  <div class="col-md-3">
-    <div class="well">
-      <img src="https://s-media-cache-ak0.pinimg.com/originals/3e/c9/3e/3ec93e39bd3840081e6349db501f5c3b.jpg"  height="350" style="width:100%;">
-      <div class="bottom-right">Experience</div>
+   @foreach(var experience in @Model["newest-experiences"])
+   {
+     <div class="col-md-3">
+       <div class="well">
+         <a href="experience/@experience.GetId()/view"><img src="@experience.GetPhotoLink()"  style="width:100%;">
+         <div class="bottom-right">@experience.GetTitle()</div></a>
 
-    </div>
+       </div>
+     </div>
+   }
   </div>
-  @* } *@
-</div>
-
-
-
 
 <h2>Featured Cities</h2>
 <div class="row">
-  @* @foreach(var img in @experience.GetPhotoLink().Take(4))
-  { *@
-  <div class="col-md-3">
-    <div class="well">
-      <img src="https://s-media-cache-ak0.pinimg.com/originals/3e/c9/3e/3ec93e39bd3840081e6349db501f5c3b.jpg"  height="350" style="width:100%;">
-      <div class="bottom-right">Experience</div>
+    @foreach(var city in @Model["all-cities"])
+    {
+      <div class="col-md-3">
+        <div class="well">
+          <a href="city/@city.GetId()/view"><img src="@city.GetPhotoLink()"  style="width:100%;">
+          <div class="bottom-right">@city.GetName()</div></a>
 
-    </div>
+        </div>
+      </div>
+    }
   </div>
-  @* } *@
-</div>
 <div class="footer">
   <p>copyright </p>
 </div>
