@@ -6,10 +6,17 @@
 
 }
 
+<header>
+  <div class="headerLogo">
+    <img src="../img/logo.png" alt="Logo">
+  </div>
+
+</header>
+
+
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">City Experiences</a>
     </div>
 
     <ul class="nav navbar-nav">
@@ -50,6 +57,7 @@
   <h2>@Model["experience"].GetCityName()</h2>
 
   <h2>Hosted By: @Model["experience"].GetHostName()</h2>
+
   <img src='@Model["experience"].GetPhotoLink()' height = "300px" alt="">
 
   <h2>@Model["experience"].GetDescription()</h2>
