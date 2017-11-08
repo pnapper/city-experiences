@@ -102,8 +102,6 @@ namespace CityExperiences.Controllers
 
       List<Person> allUsers = Person.GetAll();
 
-
-
       foreach (var person in allUsers)
       {
         if(person.GetName() == username && person.GetPassword() == password)
@@ -124,8 +122,6 @@ namespace CityExperiences.Controllers
         }
       }
       return View("Index");
-
-
     }
 
     // User Signup Page
@@ -230,7 +226,12 @@ namespace CityExperiences.Controllers
       model.Add("experience", thisExperience);
 
       return View("ViewExperience", model);
-
     }
+
+    // [HttpPost("/user/{userId}/experience/{experienceId}/book")]
+    // public ActionResult BookExperience()
+    // {
+    //
+    // }
   }
 }
