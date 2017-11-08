@@ -12,7 +12,7 @@ namespace CityExperiences.Models
 
     public City(string name, string link, int Id = 0)
     {
-      _name = name.ToLower();
+      _name = name;
       _link = link;
       _id = Id;
     }
