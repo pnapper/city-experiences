@@ -12,7 +12,7 @@ namespace CityExperiences.Models
 
     public City(string name, string link, int Id = 0)
     {
-      _name = name;
+      _name = name.ToLower();
       _link = link;
       _id = Id;
     }
@@ -81,7 +81,7 @@ namespace CityExperiences.Models
 
       MySqlParameter searchName = new MySqlParameter();
       searchName.ParameterName = "@thisName";
-      searchName.Value = name;
+      searchName.Value = name.ToLower();
       cmd.Parameters.Add(searchName);
 
       var rdr = cmd.ExecuteReader() as MySqlDataReader;

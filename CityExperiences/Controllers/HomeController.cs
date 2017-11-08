@@ -42,7 +42,8 @@ namespace CityExperiences.Controllers
     [HttpPost("/experiences/tag/search")]
     public ActionResult ViewTagExperiences()
     {
-      Tag tagSearch = Tag.FindId(Request.Form["tag-name"]);
+      string thistag = Request.Form["tag-name"];
+      Tag tagSearch = Tag.FindId(thistag.ToLower());
       Console.WriteLine(tagSearch);
       List<Experience> allTagExperiences = tagSearch.GetTagExperiences();
 
@@ -53,9 +54,17 @@ namespace CityExperiences.Controllers
     [HttpPost("/experiences/city/search")]
     public ActionResult ViewCityExperiences()
     {
-      City citySearch = City.FindId(Request.Form["city-name"]);
+      Dictionary<string, object> model = new Dictionary<string, object> ();
+
+      string thiscity = Request.Form["city-name"];
+      City citySearch = City.FindId(thiscity.ToLower());
       List<Experience> allCityExperiences = citySearch.GetCityExperiences();
-      return View("CityExperiences", allCityExperiences);
+
+      model.Add("city", citySearch);
+      model.Add("experiences", allCityExperiences);
+
+
+      return View("CityExperiences", model);
     }
 
 
