@@ -228,6 +228,7 @@ namespace CityExperiences.Models
 
     public List<Experience> GetPersonBookings()
     {
+      List<Experience> allPersonBookings = new List<Experience> {};
       MySqlConnection conn = DB.Connection();
       conn.Open();
 
@@ -239,7 +240,7 @@ namespace CityExperiences.Models
       SearchId.Value = this._id;
       cmd.Parameters.Add(SearchId);
 
-      List<Experience> allPersonBookings = new List<Experience> {};
+
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
 
       while(rdr.Read())
