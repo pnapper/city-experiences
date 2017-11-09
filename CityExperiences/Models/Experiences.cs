@@ -424,49 +424,36 @@ namespace CityExperiences.Models
         conn.Dispose();
       }
     }
-    //
-    // public List<Tag> GetTags()
-    // {
-    //   List<Tag> bookTags = new List<Tag> {};
-    //   MySqlConnection conn = DB.Connection();
-    //   conn.Open();
-    //   var cmd = conn.CreateCommand() as MySqlCommand;
-    //   cmd.CommandText = @"SELECT tags.* FROM experiences JOIN experiences_tags ON (experiences.id = experiences_tags.experiences_id) JOIN tags ON (experiences_tags.tag_id = tags.id) WHERE experiences.id = @searchId;";
-    //
-    //   MySqlParameter searchId = new MySqlParameter();
-    //   searchId.ParameterName = "@searchId";
-    //   searchId.Value = _id;
-    //   cmd.Parameters.Add(searchId);
-    //
-    //   var rdr = cmd.ExecuteReader() as MySqlDataReader;
-    //   while(rdr.Read())
-    //   {
-    //     int tagsId = rdr.GetInt32(0);
-    //     string tagsName = rdr.GetString(1);
-    //     Tag newTag = new Tag(tagName, tagId);
-    //     experiencesTags.Add(newTag);
-    //   }
-    //   conn.Close();
-    //   if (conn != null)
-    //   {
-    //     conn.Dispose();
-    //   }
-    //   return experiencesTags;
-    // }
 
-    public static void DeleteAll()
+    public List<Tag> GetTags()
     {
+      List<Tag> experiencesTags = new List<Tag> {};
       MySqlConnection conn = DB.Connection();
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"DELETE FROM experiences;";
-      cmd.ExecuteNonQuery();
+      cmd.CommandText = @"SELECT tags.* FROM experiences JOIN experiences_tags ON (experiences.id = experiences_tags.experience_id) JOIN tags ON (experiences_tags.tag_id = tags.id) WHERE experiences.id = @searchId;";
+
+      MySqlParameter searchId = new MySqlParameter();
+      searchId.ParameterName = "@searchId";
+      searchId.Value = _id;
+      cmd.Parameters.Add(searchId);
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      while(rdr.Read())
+      {
+        int tagsId = rdr.GetInt32(0);
+        string tagsName = rdr.GetString(1);
+        Tag newTag = new Tag(tagsName, tagsId);
+        experiencesTags.Add(newTag);
+      }
       conn.Close();
       if (conn != null)
       {
         conn.Dispose();
       }
+      return experiencesTags;
     }
+
 
     public void DeleteExperience()
     {

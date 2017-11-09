@@ -50,6 +50,23 @@ namespace CityExperiences.Controllers
       return View("TagExperiences", allTagExperiences);
     }
 
+    //SEARCH EXPERIENCES BY TAG WITH USER LOGIN
+    [HttpPost("/user/{userId}/experiences/tag/search")]
+    public ActionResult ViewTagExperiences(int userId)
+    {
+      Dictionary<string, object> model = new Dictionary<string, object> ();
+
+      Person thisPerson = Person.Find(userId);
+      string thistag = Request.Form["tag-name"];
+      Tag tagSearch = Tag.FindId(thistag.ToLower());
+      List<Experience> allTagExperiences = tagSearch.GetTagExperiences();
+
+      model.Add("user", thisPerson);
+      model.Add("experiences", allTagExperiences);
+
+      return View("TagExperiencesUser", model);
+    }
+
     //SEARCH EXPERIENCES BY CITY
     [HttpPost("/experiences/city/search")]
     public ActionResult ViewCityExperiences()
@@ -62,7 +79,6 @@ namespace CityExperiences.Controllers
 
       model.Add("city", citySearch);
       model.Add("experiences", allCityExperiences);
-
 
       return View("CityExperiences", model);
     }
@@ -98,6 +114,23 @@ namespace CityExperiences.Controllers
       model.Add("experiences", allCityExperiences);
 
       return View("CityExperiences", model);
+    }
+
+    //VIEW EXPERIENCES BY CITY WITH USER LOGIN THROUGH SEARCH FUNCTION
+    [HttpPost("/user/{userId}/experiences/city/search")]
+    public ActionResult SearchCityExperiences(int userId, int cityId)
+    {
+      Dictionary<string, object> model = new Dictionary<string, object> ();
+
+      Person thisPerson = Person.Find(userId);
+      City citySearch = City.Find(cityId);
+      List<Experience> allCityExperiences = citySearch.GetCityExperiences();
+
+      model.Add("user", thisPerson);
+      model.Add("city", citySearch);
+      model.Add("experiences", allCityExperiences);
+
+      return View("CityExperiencesUser", model);
     }
 
     //VIEW EXPERIENCES BY CITY WITH USER LOGIN
@@ -266,11 +299,7 @@ namespace CityExperiences.Controllers
 
       Person thisPerson = Person.Find(userId);
       int UserId = userId;
-      // Console.WriteLine("location id"+Request.Form["experience-location"]);
-      // Console.WriteLine("experience title"+Request.Form["experience-title"]);
-      // Console.WriteLine("experience description"+Request.Form["experience-description"]);
-      // Console.WriteLine("experience-photo"+Request.Form["experience-photo"]);
-      // Console.WriteLine("experience-price"+Request.Form["experience-price"]);
+
       Experience newExperience = new Experience(Int32.Parse(Request.Form["experience-location"]),
       UserId, Request.Form["experience-title"], Request.Form["experience-description"], Request.Form["experience-photo"], Int32.Parse(Request.Form["experience-price"]));
       newExperience.Save();
@@ -332,10 +361,5 @@ namespace CityExperiences.Controllers
       return View("ViewExperienceUser", model);
     }
 
-    // [HttpPost("/user/{userId}/experience/{experienceId}/book")]
-    // public ActionResult BookExperience()
-    // {
-    //
-    // }
   }
 }

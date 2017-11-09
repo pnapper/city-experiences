@@ -4,6 +4,10 @@
     right: 40px;
 }*/
 
+.well a {
+  color: #383838;
+}
+
 .well img {
   display: block;
   max-height: 1000px;
