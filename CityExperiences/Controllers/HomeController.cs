@@ -118,12 +118,12 @@ namespace CityExperiences.Controllers
 
     //VIEW EXPERIENCES BY CITY WITH USER LOGIN THROUGH SEARCH FUNCTION
     [HttpPost("/user/{userId}/experiences/city/search")]
-    public ActionResult SearchCityExperiences(int userId, int cityId)
+    public ActionResult SearchCityExperiences(int userId)
     {
       Dictionary<string, object> model = new Dictionary<string, object> ();
 
       Person thisPerson = Person.Find(userId);
-      City citySearch = City.Find(cityId);
+      City citySearch = City.FindId(Request.Form["city-name"]);
       List<Experience> allCityExperiences = citySearch.GetCityExperiences();
 
       model.Add("user", thisPerson);
@@ -150,9 +150,18 @@ namespace CityExperiences.Controllers
       return View("CityExperiencesUser", model);
     }
 
+    [HttpGet("/city/{cityId}/experience/{experienceId}/view")]
+    public ActionResult ViewExperienceFromCity(int experienceId)
+    {
+
+      Experience thisExperience = Experience.Find(experienceId);
+
+      return View("ViewExperience", thisExperience);
+    }
+
     //VIEW AN EXPERIENCE FROM CITY WITH USER LOGIN
     [HttpGet("/user/{userId}/city/{cityId}/experience/{experienceId}/view")]
-    public ActionResult ViewCityExperiences(int userId, int cityId, int experienceId)
+    public ActionResult ViewCityExperience(int userId, int cityId, int experienceId)
     {
       Dictionary<string, object> model = new Dictionary<string, object> ();
 
@@ -166,6 +175,47 @@ namespace CityExperiences.Controllers
       return View("ViewExperienceUser", model);
     }
 
+    [HttpGet("/user/{userId}/experience/{experienceId}/view")]
+    public ActionResult ViewExperienceUser(int userId, int experienceId)
+    {
+      Dictionary<string, object> model = new Dictionary<string, object> ();
+
+      Person thisPerson = Person.Find(userId);
+      Experience thisExperience = Experience.Find(experienceId);
+
+      model.Add("user", thisPerson);
+      model.Add("experience", thisExperience);
+
+      return View("ViewExperienceUser", model);
+    }
+
+
+    [HttpGet("/experience/{experienceId}/view")]
+    public ActionResult ViewExperience(int experienceId)
+    {
+
+      Experience thisExperience = Experience.Find(experienceId);
+
+      return View("ViewExperience", thisExperience);
+    }
+
+    [HttpGet("/experiences/tag/experience/{experienceId}/view")]
+    public ActionResult ViewExperienceViaTag(int experienceId)
+    {
+
+      Experience thisExperience = Experience.Find(experienceId);
+
+      return View("ViewExperience", thisExperience);
+    }
+
+    [HttpGet("/experiences/city/experience/{experienceId}/view")]
+    public ActionResult ViewExperienceViaCity(int experienceId)
+    {
+
+      Experience thisExperience = Experience.Find(experienceId);
+
+      return View("ViewExperience", thisExperience);
+    }
 
     //USER PROFILE
     [HttpGet("/user/{userId}/profile")]
@@ -247,37 +297,6 @@ namespace CityExperiences.Controllers
     }
 
 
-    [HttpGet("/user/{userId}/experience/{experienceId}/view")]
-    public ActionResult ViewExperienceUser(int userId, int experienceId)
-    {
-      Dictionary<string, object> model = new Dictionary<string, object> ();
-
-      Person thisPerson = Person.Find(userId);
-      Experience thisExperience = Experience.Find(experienceId);
-
-      model.Add("user", thisPerson);
-      model.Add("experience", thisExperience);
-
-      return View("ViewExperienceUser", model);
-    }
-
-    [HttpGet("/city/{cityId}/experience/{experienceId}/view")]
-    public ActionResult ViewExperienceFromCity(int experienceId)
-    {
-
-      Experience thisExperience = Experience.Find(experienceId);
-
-      return View("ViewExperience", thisExperience);
-    }
-
-    [HttpGet("/experience/{experienceId}/view")]
-    public ActionResult ViewExperience(int experienceId)
-    {
-
-      Experience thisExperience = Experience.Find(experienceId);
-
-      return View("ViewExperience", thisExperience);
-    }
 
     [HttpGet("/user/{userId}/experience/new")]
     public ActionResult CreateExperience(int userId)
