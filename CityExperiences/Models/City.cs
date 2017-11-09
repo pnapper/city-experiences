@@ -114,7 +114,7 @@ namespace CityExperiences.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"SELECT * FROM cities;";
+      cmd.CommandText = @"SELECT * FROM cities ORDER BY id DESC LIMIT 4;";
 
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
       while(rdr.Read())

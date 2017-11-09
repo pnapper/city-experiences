@@ -30,3 +30,15 @@ strong {
 .headerLogo img {
   height: 150px;
 }
+
+.welcome {
+  color: blue;
+  font-size: 18px;
+}
+footer {
+  
+  font-style: italic;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+}
