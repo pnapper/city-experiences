@@ -1,15 +1,26 @@
-.bottom-right {
+/*.bottom-left {
     position: absolute;
     bottom: 20px;
     right: 40px;
-}
+}*/
 
 .well img {
   display: block;
-  max-height: 500px;
-  max-width: 500px;
+  max-height: 1000px;
+  max-width:1000px;
   width: auto;
   height: auto;
+  align-self: center;
+}
+
+strong {
+  font-size: 20px;
+}
+
+.well {
+  padding: 0px;
+  background-color: white;
+  border-color: white;
 }
 
 .headerLogo img {

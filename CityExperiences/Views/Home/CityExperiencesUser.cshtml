@@ -6,19 +6,11 @@
 
 }
 
-<header>
-  <div class="headerLogo">
-    <img src="../img/logo.png" alt="Logo">
-  </div>
-
-  <h1>
-    City Experiences
-  </h1>
-
-</header>
-
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">City Experiences</a>
+    </div>
     <div class="navbar-header">
     </div>
 
@@ -27,7 +19,7 @@
 
       <form class="navbar-form navbar-left" action="/experiences/tag/search" method="post">
       <div class="form-group">
-        <input type="text" class="form-control" action="/experiences/tag/search" method="post" placeholder="Search By Keyword">
+        <input type="text" class="form-control" name="tag-name" placeholder="Search By Keyword">
       </div>
       <button type="submit" class="btn btn-default">Submit</button>
     </form>

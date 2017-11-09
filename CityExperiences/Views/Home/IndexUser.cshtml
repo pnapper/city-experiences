@@ -6,14 +6,11 @@
 
 }
 
-<header>
-  <div class="headerLogo">
-    <img src="../img/logo.png" alt="Logo">
-  </div>
-
-</header>
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">City Experiences</a>
+    </div>
     <div class="navbar-header">
     </div>
 
@@ -22,7 +19,7 @@
 
       <form class="navbar-form navbar-left" action="/experiences/tag/search" method="post">
       <div class="form-group">
-        <input type="text" class="form-control" action="/experiences/tag/search" method="post" placeholder="Search By Keyword">
+        <input type="text" class="form-control" name="tag-name" placeholder="Search By Keyword">
       </div>
       <button type="submit" class="btn btn-default">Submit</button>
     </form>
@@ -53,7 +50,7 @@
      <div class="col-md-3">
        <div class="well">
          <a href="/user/@Model["user"].GetId()/experience/@experience.GetId()/view"><img src="@experience.GetPhotoLink()" height = "300px"  style="width:100%;">
-         <div class="bottom-right">@experience.GetTitle()</div></a>
+         <div class="bottom-right"><strong>@experience.GetTitle()</strong> -  <em>@experience.GetCityName()</em><br>$@experience.GetPrice() Per Person</div></a>
 
        </div>
      </div>
@@ -67,7 +64,7 @@
       <div class="col-md-3">
         <div class="well">
           <a href="/user/@Model["user"].GetId()/city/@city.GetId()/view"><img src="@city.GetPhotoLink()" height = "300px" style="width:100%;">
-          <div class="bottom-right">@city.GetName()</div></a>
+          <div class="bottom-right"><strong>@city.GetName()</strong></div></a>
 
         </div>
       </div>

@@ -6,19 +6,12 @@
 
 }
 
-<header>
-  <div class="headerLogo">
-    <img src="../img/logo.png" alt="Logo">
-  </div>
-
-  <h1>
-    City Experiences
-  </h1>
-
-</header>
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">City Experiences</a>
+    </div>
     <div class="navbar-header">
     </div>
 
@@ -55,8 +48,8 @@
   {
       <div class="col-md-3">
         <div class="well">
-          <a href="experience/@experience.GetId()/view"><img src="@experience.GetPhotoLink()" height = "500px" style="width:100%;">
-          <div class="bottom-right">@experience.GetTitle()</div></a>
+          <a href="experience/@experience.GetId()/view"><img src="@experience.GetPhotoLink()" height = "300px" style="width:100%;">
+          <div class="bottom-left">@experience.GetTitle()</div></a>
 
         </div>
       </div>
