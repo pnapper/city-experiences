@@ -43,11 +43,11 @@ version 1.0
 
 ## Authors
 
-* **Daniel Cheng**  [PurpleBooth](https://github.com/danielchengml)
-* **Sravi**  [PurpleBooth](https://github.com/Sravyy)
-* **Patrick Napper**  [PurpleBooth](https://github.com/pnapper)
-* **Saneyee Sarkar**  [PurpleBooth](https://github.com//saneyee)
-* **Gyles Batara**  [PurpleBooth](https://github.com/gylesb)
+* **Daniel Cheng**  [Github](https://github.com/danielchengml)
+* **Sravi**  [Github](https://github.com/Sravyy)
+* **Patrick Napper**  [Github](https://github.com/pnapper)
+* **Saneyee Sarkar**  [Github](https://github.com//saneyee)
+* **Gyles Batara**  [Github](https://github.com/gylesb)
 
 
 
