@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Nov 08, 2017 at 10:47 PM
+-- Generation Time: Nov 09, 2017 at 06:25 PM
 -- Server version: 5.6.35
 -- PHP Version: 7.0.15
 
@@ -33,6 +33,29 @@ CREATE TABLE `bookings` (
   `user_id` int(11) NOT NULL,
   `experience_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `bookings`
+--
+
+INSERT INTO `bookings` (`id`, `user_id`, `experience_id`) VALUES
+(1, 2, 23),
+(2, 2, 23),
+(3, 2, 23),
+(4, 2, 23),
+(5, 2, 23),
+(6, 2, 23),
+(7, 2, 23),
+(8, 2, 23),
+(9, 2, 23),
+(10, 2, 22),
+(11, 2, 22),
+(12, 2, 17),
+(13, 4, 18),
+(14, 2, 8),
+(15, 2, 15),
+(16, 6, 3),
+(17, 2, 22);
 
 -- --------------------------------------------------------
 
@@ -86,10 +109,9 @@ INSERT INTO `experiences` (`id`, `location_id`, `user_id`, `title`, `description
 (7, 1, 6, 'Private City Tour', 'Take a tour of Tokyo and see the sights that you don\'t get to see on regular tours', 'http://cdn.cnn.com/cnnnext/dam/assets/170606110126-tokyo-skyline-super-tease.jpg', 210),
 (8, 5, 6, 'Helicopter Tour of NYC', 'Ride a Helicopter!', 'https://media-cdn.tripadvisor.com/media/photo-s/06/0a/8c/76/liberty-helicopter-tours.jpg', 233),
 (9, 5, 6, 'Metropolitan Museum of Art', 'Head to the Metropolitan Museum of Art in the heart of Manhattan', 'https://media-cdn.tripadvisor.com/media/photo-s/04/22/1c/fc/metropolitan-museum-of.jpg', 40),
-(12, 5, 6, 'Metropolitan Museum of Art', 'Head to the Metropolitan Museum of Art in the heart of Manhattan', 'https://media-cdn.tripadvisor.com/media/photo-s/04/22/1c/fc/metropolitan-museum-of.jpg', 40),
 (13, 3, 6, 'Visit the Eiffel Tower', 'Travel up one of the 7 wonders of the world in Paris.', 'https://www.attractiontix.co.uk/images/photosGSD/the-eiffel-tower-tour/the-eiffel-tower-tour4.jpg', 30),
 (14, 3, 6, 'Visit the Louvre', 'See the artwork of Renaissance masters! ', 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Louvre_Museum_Wikimedia_Commons.jpg/800px-Louvre_Museum_Wikimedia_Commons.jpg', 18),
-(15, 1, 6, 'Tour the Notre Dame Cathedral', 'Second only to the Eiffel Tower, Notre Dame Cathedral (Cathedrale de Notre Dame de Paris) is one of Paris\' most iconic attractions, a marvel of medieval architecture that was immortalized in Victor Hugo\'s classic novel The Hunchback of Notre Dame. Today, ', 'https://cache-graphicslib.viator.com/graphicslib/page-images/360x240/100102_Paris_Notre%20Dame%20Cathedral%20(Cathedrale%20de%20Notre%20Dame%20de%20Paris)_d479-510.jpg', 21),
+(15, 3, 6, 'Tour the Notre Dame Cathedral', 'Second only to the Eiffel Tower, Notre Dame Cathedral (Cathedrale de Notre Dame de Paris) is one of Paris\' most iconic attractions, a marvel of medieval architecture that was immortalized in Victor Hugo\'s classic novel The Hunchback of Notre Dame. Today, ', 'https://cache-graphicslib.viator.com/graphicslib/page-images/360x240/100102_Paris_Notre%20Dame%20Cathedral%20(Cathedrale%20de%20Notre%20Dame%20de%20Paris)_d479-510.jpg', 21),
 (16, 3, 6, 'Skip the Lines: Paris Catacombs Tour', 'Visit the Paris Underground tunnels filled with the remains of overflowing cemeteries. Fun for all ages!', 'http://nomadicalsabbatical.com/wp-content/uploads/2014/02/Paris-Catacombs-Long-Term-Travel1.jpg', 94),
 (17, 5, 6, 'Top of the Rock VIP tour', 'Skip the lines as you climb the Rockafeller Center in New York City. ', 'https://d1v5vpeyrmf36z.cloudfront.net/media/CACHE/images/image-previews/landscape/BuyTix_1200x800/6c663e6a6c07836d57a90ebd712f7f02.jpg', 76),
 (18, 5, 6, '9/11 Memorial Tour', '', 'https://www.nycgo.com/images/venues/191/9-11-memorial-03-marley-white__x_large.jpg', 35),
@@ -337,7 +359,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `cities`
 --

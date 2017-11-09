@@ -49,14 +49,17 @@
 
 
 <body>
-  <h1>Booking Confirmation</h1>
-  <h2>Confirmation Number: @Model["booking"].GetId()</h2>
-  <h2>Host Name: @Model["experience"].GetHostName()</h2>
-  <h2>Host Email: @Model["experience"].GetHostEmail()</h2><h2>Host Phone: @Model["experience"].GetHostPhone()</h2>
-  <h2>Price: $ @Model["experience"].GetPrice()</h2>
-  <br>
+  <div class="container container-fluid">
+    <h1>Booking Confirmation</h1>
+    <h3>Confirmation Number: @Model["booking"].GetId()</h3>
+    <h3>Host Name: @Model["experience"].GetHostName()</h3>
+    <h3>Host Email: @Model["experience"].GetHostEmail()</h3><h3>Host Phone: @Model["experience"].GetHostPhone()</h3>
+    <h3>Price: $ @Model["experience"].GetPrice()</h3>
+    <br>
 
-<form class="" action="/user/@Model["user"].GetId()/profile">
-  <button type="submit" name="button" class="btn btn-info">Back to Your Profile</button>
-  </form> <br>
+  <form class="" action="/user/@Model["user"].GetId()/profile">
+    <button type="submit" name="button" class="btn btn-info">Back to Your Profile</button>
+    </form> <br>
+  </div>
+
 </body>
