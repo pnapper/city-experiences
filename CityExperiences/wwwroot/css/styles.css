@@ -26,7 +26,7 @@ strong {
   padding: 0px;
   background-color: white;
   border-color: white;
-  height: 350px;
+  height: 410px;
 }
 
 .headerLogo img {
@@ -50,12 +50,14 @@ table {
     width: 100%;
 }
 
-th, td {
+td {
     text-align: left;
     padding: 8px;
 }
 
-th{
+th {
+  text-align: left;
+  padding: 8px;
   font-size: 20px;
 }
 
