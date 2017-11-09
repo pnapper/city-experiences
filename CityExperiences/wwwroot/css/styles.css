@@ -31,6 +31,18 @@ strong {
   height: 150px;
 }
 
+
+.welcome {
+  color: blue;
+  font-size: 18px;
+}
+footer {
+  
+  font-style: italic;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+
 table {
     border-collapse: collapse;
     width: 100%;
@@ -67,4 +79,5 @@ h3, h4 {
 
 label {
   font-size: 18px;
+
 }
