@@ -44,27 +44,32 @@
 
 
 <body>
-  <h1>Experiences</h1>
-<hr>
-  <h2>@Model.GetTitle()</h2>
-  <h2>@Model.GetCityName()</h2>
-  <h2>Hosted By: @Model.GetHostName()</h2>
-  <img src='@Model.GetPhotoLink()' height = "300px" alt="">
-  <h2>@Model.GetDescription()</h2>
-  <h2>Price: $ @Model.GetPrice()</h2>
-  <h2>Tags:</h2>
-  <h4>
-  @foreach(var tag in @Model.GetTags())
-  {
-  <em><p>  @tag.GetTagName() </p></em>
-  }
-  </h4>
+  <div class="container container-fluid">
+    <div class="well">
+      <h1>Experiences</h1>
+    </div>
+  <hr>
+    <h2>@Model.GetTitle()</h2>
+    <h3>@Model.GetCityName()</h3>
+    <h3>Hosted By: @Model.GetHostName()</h3>
+    <img src='@Model.GetPhotoLink()' height = "300px" alt="">
+    <h3>@Model.GetDescription()</h3>
+    <h3>Price: $ @Model.GetPrice()</h3>
+    <h3>Tags:</h3>
+    <h4>
+    @foreach(var tag in @Model.GetTags())
+    {
+    <em><p>  @tag.GetTagName() </p></em>
+    }
+    </h4>
 
 
 
-  <form class="" action="/login" method="get">
-    <button type="submit" class="btn" name="button">Book</button>
-  </form> <br>
-  @* To build the link to go back- use modal class. *@
+    <form class="" action="/login" method="get">
+      <button type="submit" class="btn btn-info" name="button">Book</button>
+    </form> <br>
+    @* To build the link to go back- use modal class. *@
+
+  </div>
 
 </body>

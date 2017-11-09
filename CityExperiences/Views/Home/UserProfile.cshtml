@@ -18,62 +18,78 @@
       </ul>
     </div>
   </nav>
-  <div >
-    <h1>User Profile</h1>
-  </div>
-  <div class="box">
-    <h3>User Information</h3>
-    <h4>Name: @Model["user"].GetName()</h4>
-    <h4>Birthday: @Model["user"].GetDateOfBirth()</h4>
-    <h4>Country: @Model["user"].GetCountry()</h4>
-    <h4>Email: @Model["user"].GetEmail()</h4>
-    <h4>Phone Number: @Model["user"].GetPhone()</h4>
-  </div>
-  <div class="row">
-    <div class="listingBox">
-      <h2>Listings</h2>
-      <table>
-        <tr>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Price</th>
-          <th>Edit Listing</th>
-        </tr>
 
-          @foreach (var experience in @Model["listings"])
-          {
-            <tr>
-              <td><a href="/user/@Model["user"].GetId()/experience/@experience.GetId()/view">@experience.GetTitle()</a></td>
-              <td>@experience.GetDescription()</td>
-              <td>@experience.GetPrice()</td>
-              <td><a href="/user/@Model["user"].GetId()/experience/@experience.GetId()/edit">Edit</td>
-            </tr>
-          }
-        </table>
-      </div>
+  <div class="container container-fluid">
+    <div class="jumbotron">
+      <h1>User Profile</h1>
     </div>
-
+    <div class="">
+      <h4><strong>Name:</strong> @Model["user"].GetName()</h4>
+      <h4><strong>Birthday:</strong> @Model["user"].GetDateOfBirth()</h4>
+      <h4><strong>Country:</strong> @Model["user"].GetCountry()</h4>
+      <h4><strong>Email:</strong>  @Model["user"].GetEmail()</h4>
+      <h4><strong>Phone Number:</strong> @Model["user"].GetPhone()</h4>
+    </div>
     <div class="row">
-      <div class="bookingBox">
-        <h2>Bookings</h2>
-        <table>
-          <tr>
-            <th>Title</th>
-            <th>Host Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-          </tr>
-
-          @foreach (var booking in @Model["bookings"])
-          {
+      <div class="listingBox">
+        <h2>Listings</h2>
+        @if(@Model["listings"].Count == 0)
+        {
+            <h3><em>No Current Listing</em></h3>
+        }else{
+          <table>
             <tr>
-            <td><a href="/user/@Model["user"].GetId()/experience/@booking.GetId()/view">@booking.GetTitle()</td>
-            <td>@booking.GetHostName()</td>
-            <td>@booking.GetHostEmail()</td>
-            <td>@booking.GetHostPhone()</td>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Edit Listing</th>
             </tr>
-          }
-        </table>
+
+
+              @foreach (var experience in @Model["listings"])
+              {
+                <tr>
+                  <td><a href="/user/@Model["user"].GetId()/experience/@experience.GetId()/view">@experience.GetTitle()</a></td>
+                  <td>@experience.GetDescription()</td>
+                  <td>@experience.GetPrice()</td>
+                  <td><a href="/user/@Model["user"].GetId()/experience/@experience.GetId()/edit">Edit</td>
+                </tr>
+              }
+            </table>
+        }
+
+        </div>
       </div>
-    </div>
+
+      <div class="row">
+        <div class="bookingBox">
+          <h2>Bookings</h2>
+          @if(@Model["bookings"].Count == 0)
+          {
+              <h3><em>No Current Bookings</em></h3>
+          }else {
+            <table>
+              <tr>
+                <th>Title</th>
+                <th>Host Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+              </tr>
+
+              @foreach (var booking in @Model["bookings"])
+              {
+                <tr>
+                <td><a href="/user/@Model["user"].GetId()/experience/@booking.GetId()/view">@booking.GetTitle()</td>
+                <td>@booking.GetHostName()</td>
+                <td>@booking.GetHostEmail()</td>
+                <td>@booking.GetHostPhone()</td>
+                </tr>
+              }
+            </table>
+          }
+
+        </div>
+      </div>
+  </div>
+
   </body>
