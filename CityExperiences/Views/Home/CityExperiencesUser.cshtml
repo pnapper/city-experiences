@@ -43,16 +43,18 @@
   </div>
 </nav>
 
-<h2>@Model["city"].GetName() Experiences</h2>
-<div class="row">
-  @foreach(var experience in @Model["experiences"])
-  {
-      <div class="col-md-3">
-        <div class="well">
-          <a href="/user/@Model["user"].GetId()/experience/@experience.GetId()/view"><img src="@experience.GetPhotoLink()" height = "300px" style="width:100%;">
-          <div class="bottom-right">@experience.GetTitle()</div></a>
+<div class="container container-fluid">
+  <h1>@Model["city"].GetName() Experiences</h1>
+  <div class="row">
+    @foreach(var experience in @Model["experiences"])
+    {
+        <div class="col-md-3">
+          <div class="well">
+            <a href="/user/@Model["user"].GetId()/experience/@experience.GetId()/view"><img src="@experience.GetPhotoLink()" height = "300px" style="width:100%;">
+            <div class="bottom-right">@experience.GetTitle()</div></a>
 
+          </div>
         </div>
-      </div>
-}
-  </div>
+  }
+    </div>
+</div>

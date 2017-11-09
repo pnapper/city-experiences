@@ -46,20 +46,31 @@
 
 
 <body>
-  <h1>Edit Experience</h1>
-  <h2>Title: @Model["experience"].GetTitle()</h2>
-  <h2>Location: @Model["experience"].GetCityName()</h2>
-  <form class="form-group" action="/user/@Model["user"].GetId()/experience/@Model["experience"].GetId()/edit" method="post">
-    <label for="experience-description">Description</label>
-    <input type="text" name="experience-description" onfocus="this.value=''" value="@Model["experience"].GetDescription()">
-    <br>
-    <label for="experience-photo">Photo Link</label>
-    <input type="text" name="experience-photo" onfocus="this.value=''" value="@Model["experience"].GetPhotoLink()">
-    <br>
-    <label for="experience-price">Price</label>
-    <input type="text" name="experience-price" onfocus="this.value=''" value="@Model["experience"].GetPrice()">
-    <br>
-    <button type="submit" name="button">Update</button>
-  </form>
+  <div class="container container-fluid">
+    <div class="jumbotron">
+      <h1>Edit Experience</h1>
+    </div>
+    <h1>Title: @Model["experience"].GetTitle()</h1>
+    <h2>Location: @Model["experience"].GetCityName()</h2>
+      <br>
+      <div id="formOne">
+        <form class="form-group" action="/user/@Model["user"].GetId()/experience/@Model["experience"].GetId()/edit" method="post">
+          <label for="experience-description">Description</label>
+          <input type="text" name="experience-description" onfocus="this.value=''" value="@Model["experience"].GetDescription()">
+          <br>
+          <br>
+          <label for="experience-photo">Photo Link</label>
+          <input type="text" name="experience-photo" onfocus="this.value=''" value="@Model["experience"].GetPhotoLink()">
+          <br>
+          <br>
+          <label for="experience-price">Price</label>
+          <input type="text" name="experience-price" onfocus="this.value=''" value="@Model["experience"].GetPrice()">
+          <br>
+          <br>
+          <button type="submit" name="button">Update</button>
+        </form>
+      </div>
+
+  </div>
 
 </body>
